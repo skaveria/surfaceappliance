@@ -1,30 +1,31 @@
 <html>
   <body style="margin:0; background:#111; color:#eee; min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif;">
-    <div id="app">
-      <div style="text-align:center">
-        <div style="font-size:10vw;">Hey whatup</div>
-        <div style="font-size:3vw; opacity:.7;">surface brain online</div>
-      </div>
+    <div id="app" style="text-align:center">
+      <div id="time" style="font-size:10vw;"></div>
+      <div id="weather" style="font-size:3vw; opacity:.75;">loading weather...</div>
     </div>
 
     <script>
-      async function refreshApp() {
-        try {
-          const res = await fetch('/?t=' + Date.now(), { cache: 'no-store' });
-          const text = await res.text();
-          const doc = new DOMParser().parseFromString(text, 'text/html');
-          const newApp = doc.querySelector('#app');
-          const app = document.querySelector('#app');
+      function updateTime() {
+        const now = new Date();
+        document.getElementById('time').textContent =
+          now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      }
 
-          if (newApp && app && app.innerHTML !== newApp.innerHTML) {
-            app.innerHTML = newApp.innerHTML;
-          }
+      async function updateWeather() {
+        try {
+          const res = await fetch('https://wttr.in/Show+Low?format=%t+%C');
+          const text = await res.text();
+          document.getElementById('weather').textContent = text.trim();
         } catch (e) {
-          console.log('refresh failed', e);
+          document.getElementById('weather').textContent = 'weather unavailable';
         }
       }
 
-      setInterval(refreshApp, 1000);
+      updateTime();
+      updateWeather();
+      setInterval(updateTime, 1000);
+      setInterval(updateWeather, 600000);
     </script>
   </body>
 </html>
