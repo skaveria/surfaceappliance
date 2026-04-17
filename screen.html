@@ -1,8 +1,24 @@
 <html>
   <body style="margin:0; background:#111; color:#eee; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:sans-serif;">
-    <h1 style="font-size:10vw; font-weight:500;">Hey whatup</h1>
+    <div id="app">
+      <h1 style="font-size:10vw; font-weight:500;">Hey whatup</h1>
+    </div>
+
     <script>
-      setTimeout(() => location.reload(), 1000);
+      async function refresh() {
+        const res = await fetch('/');
+        const text = await res.text();
+
+        // grab just the inner content
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        const newApp = doc.querySelector('#app');
+
+        if (newApp) {
+          document.querySelector('#app').innerHTML = newApp.innerHTML;
+        }
+      }
+
+      setInterval(refresh, 1000);
     </script>
   </body>
 </html>
