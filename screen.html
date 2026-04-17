@@ -1,24 +1,30 @@
 <html>
-  <body style="margin:0; background:#111; color:#eee; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:sans-serif;">
+  <body style="margin:0; background:#111; color:#eee; min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif;">
     <div id="app">
-      <h1 style="font-size:10vw; font-weight:500;">Hello!</h1>
+      <div style="text-align:center">
+        <div style="font-size:10vw;">Hey whatup</div>
+        <div style="font-size:3vw; opacity:.7;">surface brain online</div>
+      </div>
     </div>
 
     <script>
-      async function refresh() {
-        const res = await fetch('/');
-        const text = await res.text();
+      async function refreshApp() {
+        try {
+          const res = await fetch('/?t=' + Date.now(), { cache: 'no-store' });
+          const text = await res.text();
+          const doc = new DOMParser().parseFromString(text, 'text/html');
+          const newApp = doc.querySelector('#app');
+          const app = document.querySelector('#app');
 
-        // grab just the inner content
-        const doc = new DOMParser().parseFromString(text, 'text/html');
-        const newApp = doc.querySelector('#app');
-
-        if (newApp) {
-          document.querySelector('#app').innerHTML = newApp.innerHTML;
+          if (newApp && app && app.innerHTML !== newApp.innerHTML) {
+            app.innerHTML = newApp.innerHTML;
+          }
+        } catch (e) {
+          console.log('refresh failed', e);
         }
       }
 
-      setInterval(refresh, 1000);
+      setInterval(refreshApp, 1000);
     </script>
   </body>
 </html>
