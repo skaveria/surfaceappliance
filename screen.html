@@ -5,27 +5,38 @@
       <div id="weather" style="font-size:4vw; opacity:.75;">loading weather...</div>
     </div>
 
-    <script>
-      function updateTime() {
-        const now = new Date();
-        document.getElementById('time').textContent =
-          now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-      }
+<script>
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('time').textContent =
+      now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
 
-      async function updateWeather() {
-        try {
-          const res = await fetch('https://wttr.in/Show+Low?format=%t+%C');
-          const text = await res.text();
-          document.getElementById('weather').textContent = text.trim();
-        } catch (e) {
-          document.getElementById('weather').textContent = 'weather unavailable';
-        }
-      }
+  async function updateWeather() {
+    try {
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=34.2542&longitude=-110.0298&current=temperature_2m,weather_code&temperature_unit=fahrenheit';
+      const res = await fetch(url);
+      const data = await res.json();
+      const codeMap = {
+        0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Overcast',
+        45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+        61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 71: 'Light snow',
+        73: 'Snow', 75: 'Heavy snow', 80: 'Rain showers', 81: 'Rain showers',
+        82: 'Heavy showers', 95: 'Thunderstorm'
+      };
+      const temp = Math.round(data.current.temperature_2m);
+      const desc = codeMap[data.current.weather_code] || 'Weather';
+      document.getElementById('weather').textContent = `${temp}°F · ${desc}`;
+    } catch (e) {
+      document.getElementById('weather').textContent = 'weather unavailable';
+    }
+  }
 
-      updateTime();
-      updateWeather();
-      setInterval(updateTime, 1000);
-      setInterval(updateWeather, 60000);
-    </script>
+  updateTime();
+  updateWeather();
+  setInterval(updateTime, 1000);
+  setInterval(updateWeather, 600000);
+</script>
+
   </body>
 </html>
