@@ -2,29 +2,27 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Alarm Clock</title>
+  <title>Amber Clock</title>
 
   <style>
     :root {
-      --bg: #080b0c;
-      --panel: #101819;
-      --glass: #142225;
-      --vfd: #79fff2;
-      --vfd-soft: #1bded0;
-      --text-dim: #8bb9b6;
+      --bg: #0b0704;
+      --panel: #140c06;
+      --glass: #1c1209;
+      --amber: #ffb347;
+      --amber-core: #ffd27a;
+      --amber-dim: #a8732a;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 50% 45%, #162326 0%, #080b0c 58%, #030404 100%);
-      color: var(--vfd);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        radial-gradient(circle at 50% 40%, #1a1108 0%, #0b0704 60%, #020101 100%);
+      color: var(--amber);
+      font-family: ui-monospace, Menlo, Consolas, monospace;
       overflow: hidden;
     }
 
@@ -34,6 +32,7 @@
       justify-content: center;
     }
 
+    /* subtle CRT scanlines */
     body::before {
       content: "";
       position: fixed;
@@ -41,112 +40,118 @@
       pointer-events: none;
       background: repeating-linear-gradient(
         to bottom,
-        rgba(255,255,255,0.035) 0px,
-        rgba(255,255,255,0.035) 1px,
+        rgba(255,180,80,0.04) 0px,
+        rgba(255,180,80,0.04) 1px,
         transparent 1px,
-        transparent 5px
+        transparent 4px
       );
-      opacity: 0.18;
-      mix-blend-mode: screen;
+      opacity: 0.25;
     }
 
+    /* vignette */
     body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at center, transparent 0%, transparent 55%, rgba(0,0,0,0.55) 100%);
+        radial-gradient(circle at center, transparent 55%, rgba(0,0,0,0.65) 100%);
     }
 
     #app {
       width: min(92vw, 1100px);
-      padding: clamp(22px, 5vw, 58px);
+      padding: clamp(24px, 5vw, 60px);
       text-align: center;
-      border-radius: 28px;
+      border-radius: 18px;
+
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015)),
+        linear-gradient(180deg, rgba(255,200,120,0.08), rgba(0,0,0,0.4)),
         var(--panel);
-      border: 1px solid rgba(121,255,242,0.18);
+
+      border: 1px solid rgba(255,170,80,0.2);
+
       box-shadow:
-        0 0 28px rgba(27,222,208,0.16),
-        inset 0 0 38px rgba(121,255,242,0.06),
-        0 30px 90px rgba(0,0,0,0.7);
+        0 0 20px rgba(255,140,60,0.25),
+        inset 0 0 30px rgba(255,180,80,0.08),
+        0 30px 80px rgba(0,0,0,0.8);
+
       position: relative;
     }
 
+    /* inner glass */
     #app::before {
       content: "";
       position: absolute;
-      inset: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(121,255,242,0.08);
+      inset: 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 60%);
       pointer-events: none;
     }
 
     #label {
-      margin-bottom: 1.6vw;
-      color: var(--text-dim);
-      font-size: clamp(12px, 1.6vw, 22px);
-      letter-spacing: 0.42em;
+      color: var(--amber-dim);
+      font-size: clamp(12px, 1.5vw, 20px);
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      opacity: 0.8;
+      margin-bottom: 1.5vw;
+      opacity: 0.7;
     }
 
     #time {
-      font-size: clamp(74px, 14vw, 190px);
+      font-size: clamp(80px, 15vw, 200px);
+      letter-spacing: -0.06em;
       line-height: 0.95;
-      letter-spacing: -0.08em;
-      color: var(--vfd);
+
+      color: var(--amber-core);
+
+      /* THIS is the retro glow */
       text-shadow:
-        0 0 4px rgba(121,255,242,0.95),
-        0 0 14px rgba(121,255,242,0.72),
-        0 0 34px rgba(27,222,208,0.55),
-        0 0 72px rgba(27,222,208,0.28);
-      filter: saturate(1.2);
+        0 0 2px rgba(255,210,120,1),
+        0 0 8px rgba(255,170,70,0.9),
+        0 0 18px rgba(255,140,50,0.6),
+        0 0 35px rgba(255,110,30,0.35);
+
+      filter: contrast(1.1) brightness(1.05);
     }
 
     #seconds {
-      font-size: 0.34em;
-      letter-spacing: -0.03em;
-      opacity: 0.72;
-      margin-left: 0.18em;
-      vertical-align: baseline;
+      font-size: 0.32em;
+      opacity: 0.75;
+      margin-left: 0.2em;
     }
 
     #weather {
-      margin-top: clamp(16px, 2.6vw, 34px);
-      font-size: clamp(22px, 4vw, 54px);
-      color: #b8fffa;
-      opacity: 0.82;
+      margin-top: clamp(16px, 2.5vw, 30px);
+      font-size: clamp(20px, 4vw, 48px);
+      color: var(--amber);
+      opacity: 0.85;
+
       text-shadow:
-        0 0 4px rgba(121,255,242,0.7),
-        0 0 18px rgba(27,222,208,0.32);
+        0 0 4px rgba(255,180,80,0.8),
+        0 0 14px rgba(255,140,50,0.4);
     }
 
     #date {
-      margin-top: clamp(10px, 1.5vw, 20px);
-      font-size: clamp(14px, 2vw, 28px);
-      color: var(--text-dim);
-      opacity: 0.72;
+      margin-top: 10px;
+      font-size: clamp(14px, 2vw, 26px);
+      color: var(--amber-dim);
+      opacity: 0.7;
       letter-spacing: 0.08em;
     }
 
     .colon {
-      animation: pulse 2s steps(1, end) infinite;
+      animation: blink 2s steps(1, end) infinite;
     }
 
-    @keyframes pulse {
-      50% {
-        opacity: 0.25;
-      }
+    @keyframes blink {
+      50% { opacity: 0.2; }
     }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div id="label">local chronometer</div>
+    <div id="label">digital chronometer</div>
     <div id="time">--<span class="colon">:</span>--<span id="seconds">--</span></div>
     <div id="weather">loading weather...</div>
     <div id="date"></div>
@@ -162,20 +167,20 @@
         second: '2-digit'
       }).formatToParts(now);
 
-      const hour = parts.find(p => p.type === 'hour')?.value || '--';
-      const minute = parts.find(p => p.type === 'minute')?.value || '--';
-      const second = parts.find(p => p.type === 'second')?.value || '--';
-      const dayPeriod = parts.find(p => p.type === 'dayPeriod')?.value || '';
+      const h = parts.find(p => p.type === 'hour')?.value || '--';
+      const m = parts.find(p => p.type === 'minute')?.value || '--';
+      const s = parts.find(p => p.type === 'second')?.value || '--';
+      const ap = parts.find(p => p.type === 'dayPeriod')?.value || '';
 
       document.getElementById('time').innerHTML =
-        `${hour}<span class="colon">:</span>${minute}<span id="seconds">${second}</span>`;
+        `${h}<span class="colon">:</span>${m}<span id="seconds">${s}</span>`;
 
       document.getElementById('date').textContent =
         now.toLocaleDateString([], {
           weekday: 'long',
           month: 'long',
           day: 'numeric'
-        }) + (dayPeriod ? ` · ${dayPeriod}` : '');
+        }) + (ap ? ` · ${ap}` : '');
     }
 
     async function updateWeather() {
@@ -185,32 +190,20 @@
         const data = await res.json();
 
         const codeMap = {
-          0: 'Clear',
-          1: 'Mostly clear',
-          2: 'Partly cloudy',
-          3: 'Overcast',
-          45: 'Fog',
-          48: 'Rime fog',
-          51: 'Light drizzle',
-          53: 'Drizzle',
-          55: 'Heavy drizzle',
-          61: 'Light rain',
-          63: 'Rain',
-          65: 'Heavy rain',
-          71: 'Light snow',
-          73: 'Snow',
-          75: 'Heavy snow',
-          80: 'Rain showers',
-          81: 'Rain showers',
-          82: 'Heavy showers',
+          0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Overcast',
+          45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+          61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
+          71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+          80: 'Rain showers', 81: 'Rain showers', 82: 'Heavy showers',
           95: 'Thunderstorm'
         };
 
         const temp = Math.round(data.current.temperature_2m);
         const desc = codeMap[data.current.weather_code] || 'Weather';
 
-        document.getElementById('weather').textContent = `${temp}°F · ${desc}`;
-      } catch (e) {
+        document.getElementById('weather').textContent =
+          `${temp}°F · ${desc}`;
+      } catch {
         document.getElementById('weather').textContent = 'weather unavailable';
       }
     }
