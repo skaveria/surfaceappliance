@@ -6,12 +6,12 @@
 
   <style>
     :root {
-      --bg: #0b0704;
-      --panel: #140c06;
-      --glass: #1c1209;
-      --amber: #ffb347;
-      --amber-core: #ffd27a;
-      --amber-dim: #a8732a;
+      --bg: #080402;
+      --panel: #130805;
+      --amber: #ff7a18;
+      --amber-core: #ff9a2f;
+      --amber-hot: #ffb15c;
+      --amber-dim: #9c4818;
     }
 
     * { box-sizing: border-box; }
@@ -20,7 +20,7 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 50% 40%, #1a1108 0%, #0b0704 60%, #020101 100%);
+        radial-gradient(circle at 50% 40%, #1a0b05 0%, #080402 62%, #020100 100%);
       color: var(--amber);
       font-family: ui-monospace, Menlo, Consolas, monospace;
       overflow: hidden;
@@ -32,30 +32,27 @@
       justify-content: center;
     }
 
-    /* subtle CRT scanlines */
+    /* coarse old-display pixel grid */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,180,80,0.04) 0px,
-        rgba(255,180,80,0.04) 1px,
-        transparent 1px,
-        transparent 4px
-      );
-      opacity: 0.25;
+      background-image:
+        linear-gradient(rgba(255,110,20,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,110,20,0.08) 1px, transparent 1px);
+      background-size: 9px 9px;
+      opacity: 0.26;
+      mix-blend-mode: screen;
     }
 
-    /* vignette */
     body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at center, transparent 55%, rgba(0,0,0,0.65) 100%);
+        radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.72) 100%);
     }
 
     #app {
@@ -63,29 +60,42 @@
       padding: clamp(24px, 5vw, 60px);
       text-align: center;
       border-radius: 18px;
-
       background:
-        linear-gradient(180deg, rgba(255,200,120,0.08), rgba(0,0,0,0.4)),
+        linear-gradient(180deg, rgba(255,120,35,0.08), rgba(0,0,0,0.45)),
         var(--panel);
-
-      border: 1px solid rgba(255,170,80,0.2);
-
+      border: 1px solid rgba(255,112,24,0.26);
       box-shadow:
-        0 0 20px rgba(255,140,60,0.25),
-        inset 0 0 30px rgba(255,180,80,0.08),
-        0 30px 80px rgba(0,0,0,0.8);
-
+        0 0 24px rgba(255,90,20,0.22),
+        inset 0 0 36px rgba(255,100,20,0.08),
+        0 30px 80px rgba(0,0,0,0.82);
       position: relative;
     }
 
-    /* inner glass */
-    #app::before {
+    #display {
+      position: relative;
+      padding: clamp(16px, 3vw, 34px);
+      border-radius: 12px;
+      background:
+        linear-gradient(180deg, rgba(255,120,35,0.06), rgba(0,0,0,0.22)),
+        #100603;
+      box-shadow:
+        inset 0 0 34px rgba(255,100,20,0.08),
+        inset 0 0 4px rgba(255,170,80,0.12);
+      overflow: hidden;
+    }
+
+    /* grid only over the lit display face */
+    #display::after {
       content: "";
       position: absolute;
-      inset: 12px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 60%);
+      inset: 0;
       pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,95,18,0.11) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,95,18,0.11) 1px, transparent 1px);
+      background-size: 7px 7px;
+      opacity: 0.32;
+      mix-blend-mode: multiply;
     }
 
     #label {
@@ -94,49 +104,51 @@
       letter-spacing: 0.35em;
       text-transform: uppercase;
       margin-bottom: 1.5vw;
-      opacity: 0.7;
+      opacity: 0.72;
     }
 
     #time {
       font-size: clamp(80px, 15vw, 200px);
       letter-spacing: -0.06em;
       line-height: 0.95;
-
-      color: var(--amber-core);
-
-      /* THIS is the retro glow */
+      color: var(--amber-hot);
       text-shadow:
-        0 0 2px rgba(255,210,120,1),
-        0 0 8px rgba(255,170,70,0.9),
-        0 0 18px rgba(255,140,50,0.6),
-        0 0 35px rgba(255,110,30,0.35);
-
-      filter: contrast(1.1) brightness(1.05);
+        0 0 2px rgba(255,170,70,1),
+        0 0 7px rgba(255,115,24,0.95),
+        0 0 16px rgba(255,82,10,0.72),
+        0 0 32px rgba(255,62,0,0.42),
+        0 0 58px rgba(180,40,0,0.25);
+      filter: contrast(1.18) saturate(1.18);
+      position: relative;
+      z-index: 1;
     }
 
     #seconds {
       font-size: 0.32em;
-      opacity: 0.75;
+      opacity: 0.72;
       margin-left: 0.2em;
     }
 
     #weather {
       margin-top: clamp(16px, 2.5vw, 30px);
       font-size: clamp(20px, 4vw, 48px);
-      color: var(--amber);
-      opacity: 0.85;
-
+      color: var(--amber-core);
+      opacity: 0.84;
       text-shadow:
-        0 0 4px rgba(255,180,80,0.8),
-        0 0 14px rgba(255,140,50,0.4);
+        0 0 4px rgba(255,120,35,0.85),
+        0 0 14px rgba(255,75,10,0.45);
+      position: relative;
+      z-index: 1;
     }
 
     #date {
       margin-top: 10px;
       font-size: clamp(14px, 2vw, 26px);
       color: var(--amber-dim);
-      opacity: 0.7;
+      opacity: 0.74;
       letter-spacing: 0.08em;
+      position: relative;
+      z-index: 1;
     }
 
     .colon {
@@ -144,17 +156,19 @@
     }
 
     @keyframes blink {
-      50% { opacity: 0.2; }
+      50% { opacity: 0.22; }
     }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div id="label">digital chronometer</div>
-    <div id="time">--<span class="colon">:</span>--<span id="seconds">--</span></div>
-    <div id="weather">loading weather...</div>
-    <div id="date"></div>
+    <div id="display">
+      <div id="label">digital chronometer</div>
+      <div id="time">--<span class="colon">:</span>--<span id="seconds">--</span></div>
+      <div id="weather">loading weather...</div>
+      <div id="date"></div>
+    </div>
   </div>
 
   <script>
