@@ -105,7 +105,6 @@
     }
 
     #main {
-      min-width: 0;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -125,7 +124,7 @@
     #label,
     #wind-label {
       color: var(--amber-dim);
-      font-size: clamp(11px, 1.25vw, 18px);
+      font-size: clamp(13px, 1.5vw, 22px);
       letter-spacing: 0.35em;
       text-transform: uppercase;
       margin-bottom: 1.5vw;
@@ -179,7 +178,7 @@
     }
 
     #compass {
-      width: min(24vw, 250px);
+      width: min(18vw, 180px);
       aspect-ratio: 1;
       border-radius: 50%;
       border: 1px solid rgba(255,122,24,0.55);
@@ -201,7 +200,7 @@
     .dir {
       position: absolute;
       color: var(--amber-dim);
-      font-size: clamp(12px, 1.4vw, 18px);
+      font-size: clamp(14px, 1.8vw, 22px);
       text-shadow: 0 0 8px rgba(255,90,20,0.35);
     }
 
@@ -258,7 +257,7 @@
     #wind-dir {
       margin-top: 10px;
       color: var(--amber-dim);
-      font-size: clamp(14px, 1.8vw, 24px);
+      font-size: clamp(18px, 2.2vw, 30px);
       letter-spacing: 0.08em;
     }
 
@@ -295,12 +294,12 @@
         <div id="wind-label">wind</div>
 
         <div id="compass">
-  <div class="dir n">W</div>
-  <div class="dir e">N</div>
-  <div class="dir s">E</div>
-  <div class="dir w">S</div>
-  <div id="needle"></div>
-</div>
+          <div class="dir n">W</div>
+          <div class="dir e">N</div>
+          <div class="dir s">E</div>
+          <div class="dir w">S</div>
+          <div id="needle"></div>
+        </div>
 
         <div id="wind-speed">-- mph</div>
         <div id="wind-dir">---°</div>
@@ -335,8 +334,8 @@
     }
 
     function compassLabel(degrees) {
-      const dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
-                    'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+      const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE',
+                    'S','SSW','SW','WSW','W','WNW','NW','NNW'];
       return dirs[Math.round(degrees / 22.5) % 16];
     }
 
@@ -378,7 +377,7 @@
           `${windName} · ${windDirection}°`;
 
         document.getElementById('needle').style.transform =
-          `rotate(${windDirection -270}deg)`;
+          `rotate(${windDirection - 270}deg)`;
       } catch {
         document.getElementById('weather').textContent = 'weather unavailable';
         document.getElementById('wind-speed').textContent = '-- mph';
@@ -390,7 +389,7 @@
     updateWeather();
 
     setInterval(updateTime, 1000);
-    setInterval(updateWeather, 600000);
+    setInterval(updateWeather, 60000);
   </script>
 </body>
 </html>
