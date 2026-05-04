@@ -378,7 +378,7 @@
           `${windName} · ${windDirection}°`;
 
         document.getElementById('needle').style.transform =
-          `rotate(${windDirection}deg)`;
+          `rotate(${windDirection -270}deg)`;
       } catch {
         document.getElementById('weather').textContent = 'weather unavailable';
         document.getElementById('wind-speed').textContent = '-- mph';
