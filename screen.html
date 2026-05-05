@@ -286,6 +286,11 @@
       filter: drop-shadow(0 0 6px rgba(255,90,20,0.8));
     }
 
+    #cam,
+    #cam-canvas {
+      display: none;
+    }
+
     @media (max-width: 760px) {
       #display {
         grid-template-columns: 1fr;
@@ -306,6 +311,9 @@
 </head>
 
 <body>
+  <video id="cam" autoplay playsinline muted></video>
+  <canvas id="cam-canvas" width="64" height="48"></canvas>
+
   <div id="app">
     <div id="display" class="glass-panel">
       <div id="main">
@@ -334,8 +342,8 @@
     <div id="graph-panel" class="glass-panel">
       <div id="graph-content">
         <div id="graph-header">
-          <div id="graph-label">temperature trend</div>
-          <div id="graph-readout">next 24h</div>
+          <div id="graph-label">ambient light</div>
+          <div id="graph-readout">camera pending</div>
         </div>
 
         <svg id="trend-graph" viewBox="0 0 600 140" preserveAspectRatio="none">
@@ -350,6 +358,9 @@
   </div>
 
 <script>
+const lightHistory = [];
+let cameraReady = false;
+
 function updateTime() {
   const now = new Date();
   const parts = new Intl.DateTimeFormat([], {
@@ -378,26 +389,20 @@ function compassLabel(deg) {
   return dirs[Math.round(deg / 45) % 8];
 }
 
-function renderTemperatureGraph(hourly) {
+function renderLightGraph() {
   const svgWidth = 600;
   const svgHeight = 140;
   const pad = 10;
 
-  const temps = hourly.temperature_2m.slice(0, 24);
+  if (lightHistory.length < 2) return;
 
-  if (!temps.length) return;
+  const minLight = Math.min(...lightHistory);
+  const maxLight = Math.max(...lightHistory);
+  const span = Math.max(1, maxLight - minLight);
 
-  const minTemp = Math.min(...temps);
-  const maxTemp = Math.max(...temps);
-  const span = Math.max(1, maxTemp - minTemp);
-
-  const points = temps.map((temp, i) => {
-    const x = temps.length === 1
-      ? svgWidth / 2
-      : (i / (temps.length - 1)) * svgWidth;
-
-    const y = svgHeight - pad - ((temp - minTemp) / span) * (svgHeight - pad * 2);
-
+  const points = lightHistory.map((value, i) => {
+    const x = (i / (lightHistory.length - 1)) * svgWidth;
+    const y = svgHeight - pad - ((value - minLight) / span) * (svgHeight - pad * 2);
     return [x, y];
   });
 
@@ -407,13 +412,73 @@ function renderTemperatureGraph(hourly) {
 
   const fillPath =
     linePath +
-    ` L ${svgWidth} ${svgHeight}` +
+    ` L ${points[points.length - 1][0].toFixed(1)} ${svgHeight}` +
     ` L 0 ${svgHeight} Z`;
 
   document.getElementById('graph-line').setAttribute('d', linePath);
   document.getElementById('graph-fill').setAttribute('d', fillPath);
+
+  const current = lightHistory[lightHistory.length - 1];
+  const percent = Math.round((current / 255) * 100);
+
   document.getElementById('graph-readout').textContent =
-    `${Math.round(minTemp)}–${Math.round(maxTemp)}°F · next 24h`;
+    `${percent}% · ${lightHistory.length} samples`;
+}
+
+async function initCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 320 },
+        height: { ideal: 240 }
+      },
+      audio: false
+    });
+
+    const video = document.getElementById('cam');
+    video.srcObject = stream;
+
+    video.onloadedmetadata = () => {
+      cameraReady = true;
+      document.getElementById('graph-readout').textContent = 'collecting light';
+    };
+  } catch (e) {
+    cameraReady = false;
+    document.getElementById('graph-readout').textContent = 'camera unavailable';
+  }
+}
+
+function sampleLight() {
+  if (!cameraReady) return;
+
+  const video = document.getElementById('cam');
+  const canvas = document.getElementById('cam-canvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+  if (video.readyState < 2) return;
+
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  let sum = 0;
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+
+    sum += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  const avg = sum / (pixels.length / 4);
+
+  lightHistory.push(avg);
+
+  if (lightHistory.length > 120) {
+    lightHistory.shift();
+  }
+
+  renderLightGraph();
 }
 
 async function updateWeather() {
@@ -423,8 +488,6 @@ async function updateWeather() {
       '?latitude=34.2542' +
       '&longitude=-110.0298' +
       '&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m' +
-      '&hourly=temperature_2m' +
-      '&forecast_days=2' +
       '&temperature_unit=fahrenheit' +
       '&wind_speed_unit=mph';
 
@@ -457,19 +520,20 @@ async function updateWeather() {
     document.getElementById('needle').style.transform =
       `rotate(${windDir - 270}deg)`;
 
-    renderTemperatureGraph(data.hourly);
   } catch {
     document.getElementById('weather').textContent = 'weather unavailable';
     document.getElementById('wind-speed').textContent = '-- mph';
     document.getElementById('wind-dir').textContent = '---';
-    document.getElementById('graph-readout').textContent = 'trend unavailable';
   }
 }
 
 updateTime();
 updateWeather();
+initCamera();
+
 setInterval(updateTime, 1000);
 setInterval(updateWeather, 60000);
+setInterval(sampleLight, 2000);
 </script>
 </body>
 </html>
