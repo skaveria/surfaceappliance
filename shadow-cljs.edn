@@ -1,0 +1,14 @@
+{:source-paths
+ ["src"]
+
+ :dependencies
+ []
+
+ :builds
+ {:clock
+  {:target :browser
+   :output-dir "resources/public/js"
+   :asset-path "/js"
+   :modules
+   {:main
+    {:entries [surfaceappliance.clock]}}}}}

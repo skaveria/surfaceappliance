@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Amber Clock</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/clock.css">
+</head>
+
+<body>
+  <video id="cam" autoplay playsinline muted></video>
+  <canvas id="cam-canvas" width="64" height="48"></canvas>
+
+  <div id="app">
+    <div id="display" class="glass-panel">
+      <div id="main">
+        <div id="label">digital chronometer</div>
+        <div id="time">--<span class="colon">:</span>--<span id="seconds">--</span></div>
+        <div id="weather">loading weather...</div>
+        <div id="date"></div>
+      </div>
+
+      <div id="wind-panel">
+        <div id="wind-label">wind</div>
+
+        <div id="compass">
+          <div class="dir n">W</div>
+          <div class="dir e">N</div>
+          <div class="dir s">E</div>
+          <div class="dir w">S</div>
+          <div id="needle"></div>
+        </div>
+
+        <div id="wind-speed">-- mph</div>
+        <div id="wind-dir">---</div>
+      </div>
+    </div>
+
+    <div id="graph-panel" class="glass-panel">
+      <div id="graph-content">
+        <div id="graph-header">
+          <div id="graph-label">ambient light</div>
+          <div id="graph-readout">camera pending</div>
+        </div>
+
+        <svg id="trend-graph" viewBox="0 0 600 140" preserveAspectRatio="none">
+          <line class="graph-grid" x1="0" y1="35" x2="600" y2="35"></line>
+          <line class="graph-grid" x1="0" y1="70" x2="600" y2="70"></line>
+          <line class="graph-grid" x1="0" y1="105" x2="600" y2="105"></line>
+          <path id="graph-fill" class="graph-fill" d=""></path>
+          <path id="graph-line" class="graph-line" d=""></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
