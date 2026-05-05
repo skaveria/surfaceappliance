@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Amber Clock</title>
 
-  <!-- fonts -->
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=VT323&display=swap" rel="stylesheet">
 
   <style>
@@ -72,11 +71,8 @@
       position: relative;
     }
 
-    #display {
-      display: grid;
-      grid-template-columns: 1fr minmax(220px, 0.34fr);
-      gap: clamp(16px, 3vw, 34px);
-      padding: clamp(16px, 3vw, 34px);
+    .glass-panel {
+      position: relative;
       border-radius: 12px;
       background:
         linear-gradient(180deg, rgba(255,120,35,0.06), rgba(0,0,0,0.22)),
@@ -85,10 +81,9 @@
         inset 0 0 34px rgba(255,100,20,0.08),
         inset 0 0 4px rgba(255,170,80,0.12);
       overflow: hidden;
-      position: relative;
     }
 
-    #display::after {
+    .glass-panel::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -101,7 +96,17 @@
       mix-blend-mode: multiply;
     }
 
-    #main, #wind-panel { position: relative; z-index: 1; }
+    #display {
+      display: grid;
+      grid-template-columns: 1fr minmax(220px, 0.34fr);
+      gap: clamp(16px, 3vw, 34px);
+      padding: clamp(16px, 3vw, 34px);
+    }
+
+    #main, #wind-panel, #graph-content {
+      position: relative;
+      z-index: 1;
+    }
 
     #main {
       text-align: center;
@@ -120,14 +125,17 @@
       text-align: center;
     }
 
-    #label, #wind-label {
+    #label, #wind-label, #graph-label {
       font-family: "VT323", monospace;
       color: var(--amber-dim);
       font-size: clamp(18px, 2vw, 26px);
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      margin-bottom: 1.2vw;
       opacity: 0.72;
+    }
+
+    #label, #wind-label {
+      margin-bottom: 1.2vw;
     }
 
     #time {
@@ -152,12 +160,15 @@
       margin-left: 0.2em;
     }
 
-    #weather {
+    #weather, #wind-speed {
       font-family: "IBM Plex Mono", monospace;
-      margin-top: clamp(16px, 2.5vw, 30px);
       font-size: clamp(20px, 3vw, 42px);
       color: var(--amber-core);
       opacity: 0.84;
+    }
+
+    #weather {
+      margin-top: clamp(16px, 2.5vw, 30px);
     }
 
     #date {
@@ -217,25 +228,86 @@
         0 0 16px rgba(255,82,10,0.72);
     }
 
-#wind-speed {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: clamp(20px, 3vw, 42px);
-  color: var(--amber-core);
-  opacity: 0.84;
-}
-
     #wind-dir {
       font-family: "VT323", monospace;
       margin-top: 8px;
       font-size: clamp(20px, 2.2vw, 30px);
       color: var(--amber-dim);
     }
+
+    #graph-panel {
+      margin-top: clamp(16px, 2vw, 28px);
+      padding: clamp(14px, 2vw, 24px);
+      border: 1px solid rgba(255,112,24,0.18);
+    }
+
+    #graph-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    #graph-readout {
+      font-family: "IBM Plex Mono", monospace;
+      color: var(--amber-core);
+      opacity: 0.84;
+      font-size: clamp(16px, 2vw, 28px);
+      white-space: nowrap;
+    }
+
+    #trend-graph {
+      width: 100%;
+      height: clamp(95px, 14vh, 160px);
+      display: block;
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .graph-grid {
+      stroke: rgba(255,122,24,0.16);
+      stroke-width: 1;
+    }
+
+    .graph-fill {
+      fill: rgba(255,90,20,0.10);
+    }
+
+    .graph-line {
+      fill: none;
+      stroke: var(--amber-hot);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 6px rgba(255,90,20,0.8));
+    }
+
+    @media (max-width: 760px) {
+      #display {
+        grid-template-columns: 1fr;
+      }
+
+      #wind-panel {
+        border-left: 0;
+        border-top: 1px solid rgba(255,112,24,0.22);
+        padding-left: 0;
+        padding-top: 24px;
+      }
+
+      #compass {
+        width: min(48vw, 220px);
+      }
+    }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div id="display">
+    <div id="display" class="glass-panel">
       <div id="main">
         <div id="label">digital chronometer</div>
         <div id="time">--<span class="colon">:</span>--<span id="seconds">--</span></div>
@@ -256,6 +328,23 @@
 
         <div id="wind-speed">-- mph</div>
         <div id="wind-dir">---</div>
+      </div>
+    </div>
+
+    <div id="graph-panel" class="glass-panel">
+      <div id="graph-content">
+        <div id="graph-header">
+          <div id="graph-label">temperature trend</div>
+          <div id="graph-readout">next 24h</div>
+        </div>
+
+        <svg id="trend-graph" viewBox="0 0 600 140" preserveAspectRatio="none">
+          <line class="graph-grid" x1="0" y1="35" x2="600" y2="35"></line>
+          <line class="graph-grid" x1="0" y1="70" x2="600" y2="70"></line>
+          <line class="graph-grid" x1="0" y1="105" x2="600" y2="105"></line>
+          <path id="graph-fill" class="graph-fill" d=""></path>
+          <path id="graph-line" class="graph-line" d=""></path>
+        </svg>
       </div>
     </div>
   </div>
@@ -286,12 +375,59 @@ function updateTime() {
 
 function compassLabel(deg) {
   const dirs = ['N','NE','E','SE','S','SW','W','NW'];
-  return dirs[Math.round(deg/45)%8];
+  return dirs[Math.round(deg / 45) % 8];
+}
+
+function renderTemperatureGraph(hourly) {
+  const svgWidth = 600;
+  const svgHeight = 140;
+  const pad = 10;
+
+  const temps = hourly.temperature_2m.slice(0, 24);
+
+  if (!temps.length) return;
+
+  const minTemp = Math.min(...temps);
+  const maxTemp = Math.max(...temps);
+  const span = Math.max(1, maxTemp - minTemp);
+
+  const points = temps.map((temp, i) => {
+    const x = temps.length === 1
+      ? svgWidth / 2
+      : (i / (temps.length - 1)) * svgWidth;
+
+    const y = svgHeight - pad - ((temp - minTemp) / span) * (svgHeight - pad * 2);
+
+    return [x, y];
+  });
+
+  const linePath = points
+    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`)
+    .join(' ');
+
+  const fillPath =
+    linePath +
+    ` L ${svgWidth} ${svgHeight}` +
+    ` L 0 ${svgHeight} Z`;
+
+  document.getElementById('graph-line').setAttribute('d', linePath);
+  document.getElementById('graph-fill').setAttribute('d', fillPath);
+  document.getElementById('graph-readout').textContent =
+    `${Math.round(minTemp)}–${Math.round(maxTemp)}°F · next 24h`;
 }
 
 async function updateWeather() {
   try {
-    const url = 'https://api.open-meteo.com/v1/forecast?latitude=34.2542&longitude=-110.0298&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&temperature_unit=fahrenheit&wind_speed_unit=mph';
+    const url =
+      'https://api.open-meteo.com/v1/forecast' +
+      '?latitude=34.2542' +
+      '&longitude=-110.0298' +
+      '&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m' +
+      '&hourly=temperature_2m' +
+      '&forecast_days=2' +
+      '&temperature_unit=fahrenheit' +
+      '&wind_speed_unit=mph';
+
     const res = await fetch(url);
     const data = await res.json();
 
@@ -321,7 +457,13 @@ async function updateWeather() {
     document.getElementById('needle').style.transform =
       `rotate(${windDir - 270}deg)`;
 
-  } catch {}
+    renderTemperatureGraph(data.hourly);
+  } catch {
+    document.getElementById('weather').textContent = 'weather unavailable';
+    document.getElementById('wind-speed').textContent = '-- mph';
+    document.getElementById('wind-dir').textContent = '---';
+    document.getElementById('graph-readout').textContent = 'trend unavailable';
+  }
 }
 
 updateTime();
