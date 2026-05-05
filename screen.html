@@ -120,7 +120,6 @@
       text-align: center;
     }
 
-    /* labels (retro font) */
     #label, #wind-label {
       font-family: "VT323", monospace;
       color: var(--amber-dim);
@@ -131,7 +130,6 @@
       opacity: 0.72;
     }
 
-    /* TIME (clean font) */
     #time {
       font-family: "IBM Plex Mono", monospace;
       font-weight: 500;
@@ -174,7 +172,6 @@
     .colon { animation: blink 2s steps(1, end) infinite; }
     @keyframes blink { 50% { opacity: 0.22; } }
 
-    /* compass */
     #compass {
       width: min(18vw, 180px);
       aspect-ratio: 1;
@@ -297,13 +294,28 @@ async function updateWeather() {
     const res = await fetch(url);
     const data = await res.json();
 
+    const codeMap = {
+      0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Overcast',
+      45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+      61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
+      71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+      80: 'Rain showers', 81: 'Rain showers', 82: 'Heavy showers',
+      95: 'Thunderstorm'
+    };
+
     const temp = Math.round(data.current.temperature_2m);
+    const desc = codeMap[data.current.weather_code] || 'Weather';
     const windSpeed = Math.round(data.current.wind_speed_10m);
     const windDir = Math.round(data.current.wind_direction_10m);
 
-    document.getElementById('weather').textContent = `${temp}°F`;
-    document.getElementById('wind-speed').textContent = `${windSpeed} mph`;
-    document.getElementById('wind-dir').textContent = compassLabel(windDir);
+    document.getElementById('weather').textContent =
+      `${temp}°F · ${desc}`;
+
+    document.getElementById('wind-speed').textContent =
+      `${windSpeed} mph`;
+
+    document.getElementById('wind-dir').textContent =
+      compassLabel(windDir);
 
     document.getElementById('needle').style.transform =
       `rotate(${windDir - 270}deg)`;
