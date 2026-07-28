@@ -16,9 +16,12 @@
       --amber-dim: #9c4818;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100vh;
       background:
@@ -40,8 +43,8 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,110,20,0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,110,20,0.08) 1px, transparent 1px);
+        linear-gradient(rgba(255, 110, 20, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 110, 20, 0.08) 1px, transparent 1px);
       background-size: 9px 9px;
       opacity: 0.26;
       mix-blend-mode: screen;
@@ -53,7 +56,7 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.72) 100%);
     }
 
     #app {
@@ -61,13 +64,13 @@
       padding: clamp(18px, 3.5vw, 46px);
       border-radius: 18px;
       background:
-        linear-gradient(180deg, rgba(255,120,35,0.08), rgba(0,0,0,0.45)),
+        linear-gradient(180deg, rgba(255, 120, 35, 0.08), rgba(0, 0, 0, 0.45)),
         var(--panel);
-      border: 1px solid rgba(255,112,24,0.26);
+      border: 1px solid rgba(255, 112, 24, 0.26);
       box-shadow:
-        0 0 24px rgba(255,90,20,0.22),
-        inset 0 0 36px rgba(255,100,20,0.08),
-        0 30px 80px rgba(0,0,0,0.82);
+        0 0 24px rgba(255, 90, 20, 0.22),
+        inset 0 0 36px rgba(255, 100, 20, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.82);
       position: relative;
     }
 
@@ -75,11 +78,11 @@
       position: relative;
       border-radius: 12px;
       background:
-        linear-gradient(180deg, rgba(255,120,35,0.06), rgba(0,0,0,0.22)),
+        linear-gradient(180deg, rgba(255, 120, 35, 0.06), rgba(0, 0, 0, 0.22)),
         #100603;
       box-shadow:
-        inset 0 0 34px rgba(255,100,20,0.08),
-        inset 0 0 4px rgba(255,170,80,0.12);
+        inset 0 0 34px rgba(255, 100, 20, 0.08),
+        inset 0 0 4px rgba(255, 170, 80, 0.12);
       overflow: hidden;
     }
 
@@ -89,8 +92,8 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,95,18,0.11) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,95,18,0.11) 1px, transparent 1px);
+        linear-gradient(rgba(255, 95, 18, 0.11) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 95, 18, 0.11) 1px, transparent 1px);
       background-size: 7px 7px;
       opacity: 0.32;
       mix-blend-mode: multiply;
@@ -103,7 +106,9 @@
       padding: clamp(16px, 3vw, 34px);
     }
 
-    #main, #wind-panel, #graph-content {
+    #main,
+    #wind-panel,
+    #graph-content {
       position: relative;
       z-index: 1;
     }
@@ -116,7 +121,7 @@
     }
 
     #wind-panel {
-      border-left: 1px solid rgba(255,112,24,0.22);
+      border-left: 1px solid rgba(255, 112, 24, 0.22);
       padding-left: clamp(14px, 2vw, 28px);
       display: flex;
       flex-direction: column;
@@ -125,7 +130,9 @@
       text-align: center;
     }
 
-    #label, #wind-label, #graph-label {
+    #label,
+    #wind-label,
+    #graph-label {
       font-family: "VT323", monospace;
       color: var(--amber-dim);
       font-size: clamp(18px, 2vw, 26px);
@@ -134,7 +141,8 @@
       opacity: 0.72;
     }
 
-    #label, #wind-label {
+    #label,
+    #wind-label {
       margin-bottom: 1.2vw;
     }
 
@@ -146,11 +154,11 @@
       line-height: 0.95;
       color: var(--amber-hot);
       text-shadow:
-        0 0 2px rgba(255,170,70,1),
-        0 0 7px rgba(255,115,24,0.95),
-        0 0 16px rgba(255,82,10,0.72),
-        0 0 32px rgba(255,62,0,0.42),
-        0 0 58px rgba(180,40,0,0.25);
+        0 0 2px rgba(255, 170, 70, 1),
+        0 0 7px rgba(255, 115, 24, 0.95),
+        0 0 16px rgba(255, 82, 10, 0.72),
+        0 0 32px rgba(255, 62, 0, 0.42),
+        0 0 58px rgba(180, 40, 0, 0.25);
       filter: contrast(1.18) saturate(1.18);
     }
 
@@ -160,7 +168,8 @@
       margin-left: 0.2em;
     }
 
-    #weather, #wind-speed {
+    #weather,
+    #wind-speed {
       font-family: "IBM Plex Mono", monospace;
       font-size: clamp(20px, 3vw, 42px);
       color: var(--amber-core);
@@ -180,18 +189,25 @@
       letter-spacing: 0.08em;
     }
 
-    .colon { animation: blink 2s steps(1, end) infinite; }
-    @keyframes blink { 50% { opacity: 0.22; } }
+    .colon {
+      animation: blink 2s steps(1, end) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.22;
+      }
+    }
 
     #compass {
       width: min(18vw, 180px);
       aspect-ratio: 1;
       border-radius: 50%;
-      border: 1px solid rgba(255,122,24,0.55);
+      border: 1px solid rgba(255, 122, 24, 0.55);
       position: relative;
       box-shadow:
-        0 0 18px rgba(255,90,20,0.22),
-        inset 0 0 28px rgba(255,90,20,0.08);
+        0 0 18px rgba(255, 90, 20, 0.22),
+        inset 0 0 28px rgba(255, 90, 20, 0.08);
       margin-bottom: clamp(14px, 2vw, 24px);
     }
 
@@ -202,10 +218,29 @@
       color: var(--amber-dim);
     }
 
-    .n { top: 6%; left: 50%; transform: translateX(-50%); }
-    .e { right: 8%; top: 50%; transform: translateY(-50%); }
-    .s { bottom: 6%; left: 50%; transform: translateX(-50%); }
-    .w { left: 8%; top: 50%; transform: translateY(-50%); }
+    .n {
+      top: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .e {
+      right: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .s {
+      bottom: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .w {
+      left: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
     #needle {
       position: absolute;
@@ -224,8 +259,8 @@
       border-radius: 999px;
       background: var(--amber-hot);
       box-shadow:
-        0 0 5px rgba(255,170,70,1),
-        0 0 16px rgba(255,82,10,0.72);
+        0 0 5px rgba(255, 170, 70, 1),
+        0 0 16px rgba(255, 82, 10, 0.72);
     }
 
     #wind-dir {
@@ -238,7 +273,7 @@
     #graph-panel {
       margin-top: clamp(16px, 2vw, 28px);
       padding: clamp(14px, 2vw, 24px);
-      border: 1px solid rgba(255,112,24,0.18);
+      border: 1px solid rgba(255, 112, 24, 0.18);
     }
 
     #graph-header {
@@ -246,7 +281,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
       position: relative;
       z-index: 1;
     }
@@ -261,7 +296,7 @@
 
     #trend-graph {
       width: 100%;
-      height: clamp(95px, 14vh, 160px);
+      height: clamp(105px, 15vh, 175px);
       display: block;
       position: relative;
       z-index: 1;
@@ -269,12 +304,12 @@
     }
 
     .graph-grid {
-      stroke: rgba(255,122,24,0.16);
+      stroke: rgba(255, 122, 24, 0.16);
       stroke-width: 1;
     }
 
     .graph-fill {
-      fill: rgba(255,90,20,0.10);
+      fill: rgba(255, 90, 20, 0.10);
     }
 
     .graph-line {
@@ -283,22 +318,34 @@
       stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
-      filter: drop-shadow(0 0 6px rgba(255,90,20,0.8));
+      filter: drop-shadow(0 0 6px rgba(255, 90, 20, 0.8));
     }
 
-    #cam,
-    #cam-canvas {
-      display: none;
+    .graph-dot {
+      fill: var(--amber-hot);
+      filter: drop-shadow(0 0 5px rgba(255, 90, 20, 0.9));
+    }
+
+    .graph-axis-label {
+      fill: var(--amber-dim);
+      font-family: "VT323", monospace;
+      font-size: 18px;
+      letter-spacing: 0.05em;
     }
 
     @media (max-width: 760px) {
+      html,
+      body {
+        overflow: auto;
+      }
+
       #display {
         grid-template-columns: 1fr;
       }
 
       #wind-panel {
         border-left: 0;
-        border-top: 1px solid rgba(255,112,24,0.22);
+        border-top: 1px solid rgba(255, 112, 24, 0.22);
         padding-left: 0;
         padding-top: 24px;
       }
@@ -311,14 +358,15 @@
 </head>
 
 <body>
-  <video id="cam" autoplay playsinline muted></video>
-  <canvas id="cam-canvas" width="64" height="48"></canvas>
-
   <div id="app">
     <div id="display" class="glass-panel">
       <div id="main">
         <div id="label">digital chronometer</div>
-        <div id="time">--<span class="colon">:</span>--<span id="seconds">--</span></div>
+
+        <div id="time">
+          --<span class="colon">:</span>--<span id="seconds">--</span>
+        </div>
+
         <div id="weather">loading weather...</div>
         <div id="date"></div>
       </div>
@@ -342,36 +390,107 @@
     <div id="graph-panel" class="glass-panel">
       <div id="graph-content">
         <div id="graph-header">
-          <div id="graph-label">ambient light</div>
-          <div id="graph-readout">camera pending</div>
+          <div id="graph-label">24 hour temperature</div>
+          <div id="graph-readout">forecast pending</div>
         </div>
 
-        <svg id="trend-graph" viewBox="0 0 600 140" preserveAspectRatio="none">
+        <svg
+          id="trend-graph"
+          viewBox="0 0 600 160"
+          preserveAspectRatio="none"
+        >
           <line class="graph-grid" x1="0" y1="35" x2="600" y2="35"></line>
           <line class="graph-grid" x1="0" y1="70" x2="600" y2="70"></line>
           <line class="graph-grid" x1="0" y1="105" x2="600" y2="105"></line>
+
           <path id="graph-fill" class="graph-fill" d=""></path>
           <path id="graph-line" class="graph-line" d=""></path>
+
+          <circle
+            id="graph-current-dot"
+            class="graph-dot"
+            cx="0"
+            cy="0"
+            r="5"
+            visibility="hidden"
+          ></circle>
+
+          <text
+            id="graph-time-start"
+            class="graph-axis-label"
+            x="0"
+            y="155"
+            text-anchor="start"
+          ></text>
+
+          <text
+            id="graph-time-middle"
+            class="graph-axis-label"
+            x="300"
+            y="155"
+            text-anchor="middle"
+          ></text>
+
+          <text
+            id="graph-time-end"
+            class="graph-axis-label"
+            x="600"
+            y="155"
+            text-anchor="end"
+          ></text>
         </svg>
       </div>
     </div>
   </div>
 
 <script>
-const lightHistory = [];
-let cameraReady = false;
+const WEATHER_URL =
+  'https://api.open-meteo.com/v1/forecast' +
+  '?latitude=34.007' +
+  '&longitude=-109.1567' +
+  '&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m' +
+  '&hourly=temperature_2m' +
+  '&temperature_unit=fahrenheit' +
+  '&wind_speed_unit=mph' +
+  '&forecast_days=2' +
+  '&timezone=auto';
+
+const WEATHER_CODES = {
+  0: 'Clear',
+  1: 'Mostly clear',
+  2: 'Partly cloudy',
+  3: 'Overcast',
+  45: 'Fog',
+  48: 'Rime fog',
+  51: 'Light drizzle',
+  53: 'Drizzle',
+  55: 'Heavy drizzle',
+  61: 'Light rain',
+  63: 'Rain',
+  65: 'Heavy rain',
+  71: 'Light snow',
+  73: 'Snow',
+  75: 'Heavy snow',
+  80: 'Rain showers',
+  81: 'Rain showers',
+  82: 'Heavy showers',
+  95: 'Thunderstorm',
+  96: 'Thunderstorm',
+  99: 'Thunderstorm'
+};
 
 function updateTime() {
   const now = new Date();
+
   const parts = new Intl.DateTimeFormat([], {
     hour: 'numeric',
     minute: '2-digit',
     second: '2-digit'
   }).formatToParts(now);
 
-  const h = parts.find(p => p.type === 'hour')?.value || '--';
-  const m = parts.find(p => p.type === 'minute')?.value || '--';
-  const s = parts.find(p => p.type === 'second')?.value || '--';
+  const h = parts.find(part => part.type === 'hour')?.value || '--';
+  const m = parts.find(part => part.type === 'minute')?.value || '--';
+  const s = parts.find(part => part.type === 'second')?.value || '--';
 
   document.getElementById('time').innerHTML =
     `${h}<span class="colon">:</span>${m}<span id="seconds">${s}</span>`;
@@ -384,156 +503,211 @@ function updateTime() {
     });
 }
 
-function compassLabel(deg) {
-  const dirs = ['N','NE','E','SE','S','SW','W','NW'];
-  return dirs[Math.round(deg / 45) % 8];
+function compassLabel(degrees) {
+  const directions = [
+    'N',
+    'NE',
+    'E',
+    'SE',
+    'S',
+    'SW',
+    'W',
+    'NW'
+  ];
+
+  return directions[Math.round(degrees / 45) % 8];
 }
 
-function renderLightGraph() {
+function formatGraphTime(dateString) {
+  return new Date(dateString).toLocaleTimeString([], {
+    hour: 'numeric'
+  });
+}
+
+function renderTemperatureGraph(times, temperatures) {
   const svgWidth = 600;
-  const svgHeight = 140;
-  const pad = 10;
+  const graphTop = 10;
+  const graphBottom = 130;
+  const graphHeight = graphBottom - graphTop;
 
-  if (lightHistory.length < 2) return;
+  if (!Array.isArray(times) ||
+      !Array.isArray(temperatures) ||
+      temperatures.length < 2) {
+    document.getElementById('graph-readout').textContent =
+      'forecast unavailable';
 
-  const minLight = Math.min(...lightHistory);
-  const maxLight = Math.max(...lightHistory);
-  const span = Math.max(1, maxLight - minLight);
+    return;
+  }
 
-  const points = lightHistory.map((value, i) => {
-    const x = (i / (lightHistory.length - 1)) * svgWidth;
-    const y = svgHeight - pad - ((value - minLight) / span) * (svgHeight - pad * 2);
+  const minimum = Math.min(...temperatures);
+  const maximum = Math.max(...temperatures);
+  const span = Math.max(1, maximum - minimum);
+
+  /*
+   * Add a little breathing room above and below the actual forecast.
+   */
+  const lowerBound = minimum - Math.max(2, span * 0.12);
+  const upperBound = maximum + Math.max(2, span * 0.12);
+  const displaySpan = upperBound - lowerBound;
+
+  const points = temperatures.map((temperature, index) => {
+    const x =
+      (index / (temperatures.length - 1)) * svgWidth;
+
+    const normalized =
+      (temperature - lowerBound) / displaySpan;
+
+    const y =
+      graphBottom - normalized * graphHeight;
+
     return [x, y];
   });
 
   const linePath = points
-    .map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`)
+    .map(([x, y], index) => {
+      const command = index === 0 ? 'M' : 'L';
+
+      return `${command} ${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
     .join(' ');
+
+  const finalPoint = points[points.length - 1];
 
   const fillPath =
     linePath +
-    ` L ${points[points.length - 1][0].toFixed(1)} ${svgHeight}` +
-    ` L 0 ${svgHeight} Z`;
+    ` L ${finalPoint[0].toFixed(1)} ${graphBottom}` +
+    ` L 0 ${graphBottom} Z`;
 
-  document.getElementById('graph-line').setAttribute('d', linePath);
-  document.getElementById('graph-fill').setAttribute('d', fillPath);
+  document
+    .getElementById('graph-line')
+    .setAttribute('d', linePath);
 
-  const current = lightHistory[lightHistory.length - 1];
-  const percent = Math.round((current / 255) * 100);
+  document
+    .getElementById('graph-fill')
+    .setAttribute('d', fillPath);
+
+  const currentPoint = points[0];
+  const currentDot = document.getElementById('graph-current-dot');
+
+  currentDot.setAttribute('cx', currentPoint[0].toFixed(1));
+  currentDot.setAttribute('cy', currentPoint[1].toFixed(1));
+  currentDot.setAttribute('visibility', 'visible');
 
   document.getElementById('graph-readout').textContent =
-    `${percent}% · ${lightHistory.length} samples`;
+    `${Math.round(minimum)}° — ${Math.round(maximum)}°F`;
+
+  document.getElementById('graph-time-start').textContent =
+    formatGraphTime(times[0]);
+
+  document.getElementById('graph-time-middle').textContent =
+    formatGraphTime(times[Math.floor(times.length / 2)]);
+
+  document.getElementById('graph-time-end').textContent =
+    formatGraphTime(times[times.length - 1]);
 }
 
-async function initCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        width: { ideal: 320 },
-        height: { ideal: 240 }
-      },
-      audio: false
-    });
-
-    const video = document.getElementById('cam');
-    video.srcObject = stream;
-
-    video.onloadedmetadata = () => {
-      cameraReady = true;
-      document.getElementById('graph-readout').textContent = 'collecting light';
-    };
-  } catch (e) {
-    cameraReady = false;
-    document.getElementById('graph-readout').textContent = 'camera unavailable';
-  }
-}
-
-function sampleLight() {
-  if (!cameraReady) return;
-
-  const video = document.getElementById('cam');
-  const canvas = document.getElementById('cam-canvas');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-  if (video.readyState < 2) return;
-
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  let sum = 0;
-
-  for (let i = 0; i < pixels.length; i += 4) {
-    const r = pixels[i];
-    const g = pixels[i + 1];
-    const b = pixels[i + 2];
-
-    sum += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+function getNext24Hours(hourly) {
+  if (!hourly?.time || !hourly?.temperature_2m) {
+    return null;
   }
 
-  const avg = sum / (pixels.length / 4);
+  const now = Date.now();
 
-  lightHistory.push(avg);
+  let startingIndex = hourly.time.findIndex(time => {
+    return new Date(time).getTime() >= now;
+  });
 
-  if (lightHistory.length > 120) {
-    lightHistory.shift();
+  if (startingIndex < 0) {
+    startingIndex = 0;
   }
 
-  renderLightGraph();
+  const endingIndex = startingIndex + 24;
+
+  return {
+    times: hourly.time.slice(startingIndex, endingIndex),
+    temperatures: hourly.temperature_2m.slice(
+      startingIndex,
+      endingIndex
+    )
+  };
 }
 
 async function updateWeather() {
   try {
-    const url =
-      'https://api.open-meteo.com/v1/forecast' +
-      '?latitude=34.007' +
-      '&longitude=-109.1567' +
-      '&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m' +
-      '&temperature_unit=fahrenheit' +
-      '&wind_speed_unit=mph';
+    const response = await fetch(WEATHER_URL);
 
-    const res = await fetch(url);
-    const data = await res.json();
+    if (!response.ok) {
+      throw new Error(`Weather request failed: ${response.status}`);
+    }
 
-    const codeMap = {
-      0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Overcast',
-      45: 'Fog', 48: 'Rime fog', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
-      61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
-      71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
-      80: 'Rain showers', 81: 'Rain showers', 82: 'Heavy showers',
-      95: 'Thunderstorm'
-    };
+    const data = await response.json();
 
-    const temp = Math.round(data.current.temperature_2m);
-    const desc = codeMap[data.current.weather_code] || 'Weather';
-    const windSpeed = Math.round(data.current.wind_speed_10m);
-    const windDir = Math.round(data.current.wind_direction_10m);
+    if (!data.current) {
+      throw new Error('Weather response has no current conditions');
+    }
+
+    const temperature =
+      Math.round(data.current.temperature_2m);
+
+    const description =
+      WEATHER_CODES[data.current.weather_code] || 'Weather';
+
+    const windSpeed =
+      Math.round(data.current.wind_speed_10m);
+
+    const windDirection =
+      Math.round(data.current.wind_direction_10m);
 
     document.getElementById('weather').textContent =
-      `${temp}°F · ${desc}`;
+      `${temperature}°F · ${description}`;
 
     document.getElementById('wind-speed').textContent =
       `${windSpeed} mph`;
 
     document.getElementById('wind-dir').textContent =
-      compassLabel(windDir);
+      compassLabel(windDirection);
 
     document.getElementById('needle').style.transform =
-      `rotate(${windDir - 270}deg)`;
+      `rotate(${windDirection - 270}deg)`;
 
-  } catch {
-    document.getElementById('weather').textContent = 'weather unavailable';
-    document.getElementById('wind-speed').textContent = '-- mph';
-    document.getElementById('wind-dir').textContent = '---';
+    const forecast = getNext24Hours(data.hourly);
+
+    if (forecast) {
+      renderTemperatureGraph(
+        forecast.times,
+        forecast.temperatures
+      );
+    } else {
+      document.getElementById('graph-readout').textContent =
+        'forecast unavailable';
+    }
+  } catch (error) {
+    console.error(error);
+
+    document.getElementById('weather').textContent =
+      'weather unavailable';
+
+    document.getElementById('wind-speed').textContent =
+      '-- mph';
+
+    document.getElementById('wind-dir').textContent =
+      '---';
+
+    document.getElementById('graph-readout').textContent =
+      'forecast unavailable';
   }
 }
 
 updateTime();
 updateWeather();
-initCamera();
 
 setInterval(updateTime, 1000);
+
+/*
+ * Refresh current weather every minute.
+ * The returned hourly forecast also refreshes with it.
+ */
 setInterval(updateWeather, 60000);
-setInterval(sampleLight, 2000);
 </script>
 </body>
 </html>
