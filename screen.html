@@ -2,27 +2,28 @@
 <html>
 <head>
   <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
   <title>Amber Clock</title>
 
   <link
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=VT323&display=swap"
     rel="stylesheet"
-  >
+  />
 
   <style>
     :root {
-      --bg: #030200;
-      --panel: #090600;
+      --bg: #030100;
+      --panel: #090301;
 
-      --amber: #ffb000;
-      --amber-core: #ffc43d;
-      --amber-hot: #ffe19a;
-      --amber-white: #fff1bd;
-      --amber-dim: #b87800;
-      --amber-faint: #573700;
-
-      --phosphor-shadow: rgba(255, 174, 0, 0.75);
-      --phosphor-glow: rgba(255, 196, 61, 0.38);
+      --amber: #ff7a1a;
+      --amber-core: #ff9230;
+      --amber-hot: #ffb368;
+      --amber-white: #ffd8ae;
+      --amber-dim: #9a3f12;
+      --amber-faint: #461705;
     }
 
     * {
@@ -32,23 +33,30 @@
     html,
     body {
       margin: 0;
-      min-height: 100vh;
+      width: 100%;
+      min-height: 100%;
       background:
         radial-gradient(
-          circle at 50% 38%,
-          #171000 0%,
-          #060400 58%,
-          #010100 100%
+          circle at 50% 30%,
+          #160602 0%,
+          #050201 58%,
+          #010000 100%
         );
       color: var(--amber);
       font-family: "VT323", monospace;
-      overflow: hidden;
     }
 
     body {
+      min-height: 100dvh;
+      padding:
+        max(12px, env(safe-area-inset-top))
+        max(12px, env(safe-area-inset-right))
+        max(12px, env(safe-area-inset-bottom))
+        max(12px, env(safe-area-inset-left));
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
     body::before {
@@ -58,16 +66,16 @@
       pointer-events: none;
       background-image:
         linear-gradient(
-          rgba(255, 183, 0, 0.035) 1px,
+          rgba(255, 105, 18, 0.045) 1px,
           transparent 1px
         ),
         linear-gradient(
           90deg,
-          rgba(255, 183, 0, 0.025) 1px,
+          rgba(255, 105, 18, 0.032) 1px,
           transparent 1px
         );
       background-size: 8px 8px;
-      opacity: 0.48;
+      opacity: 0.36;
       mix-blend-mode: screen;
     }
 
@@ -79,37 +87,41 @@
       background:
         repeating-linear-gradient(
           0deg,
-          rgba(255, 210, 100, 0.016) 0,
-          rgba(255, 210, 100, 0.016) 1px,
+          rgba(255, 140, 60, 0.018) 0,
+          rgba(255, 140, 60, 0.018) 1px,
           transparent 1px,
           transparent 4px
         ),
         radial-gradient(
           circle at center,
-          transparent 45%,
-          rgba(0, 0, 0, 0.82) 100%
+          transparent 48%,
+          rgba(0, 0, 0, 0.84) 100%
         );
     }
 
     #app {
-      width: min(94vw, 1280px);
-      padding: clamp(18px, 3.5vw, 46px);
-      border: 1px solid rgba(255, 190, 50, 0.28);
+      width: min(94vw, 760px);
+      height: min(96dvh, 1200px);
+      padding: clamp(14px, 3vw, 28px);
+      display: grid;
+      grid-template-rows: auto minmax(300px, 1fr);
+      gap: clamp(14px, 2vh, 24px);
+      border: 1px solid rgba(255, 110, 24, 0.27);
       border-radius: 18px;
       background:
         linear-gradient(
           180deg,
-          rgba(255, 187, 45, 0.035),
-          rgba(0, 0, 0, 0.42)
+          rgba(255, 110, 24, 0.045),
+          rgba(0, 0, 0, 0.48)
         ),
         var(--panel);
       box-shadow:
-        0 0 20px rgba(255, 174, 0, 0.14),
-        0 0 65px rgba(255, 174, 0, 0.08),
-        inset 0 0 45px rgba(255, 185, 20, 0.035),
-        0 30px 80px rgba(0, 0, 0, 0.9);
+        0 0 24px rgba(255, 72, 8, 0.16),
+        0 0 72px rgba(255, 72, 8, 0.08),
+        inset 0 0 46px rgba(255, 95, 18, 0.035),
+        0 30px 90px rgba(0, 0, 0, 0.9);
       position: relative;
-      animation: cabinet-flicker 9s steps(1, end) infinite;
+      animation: cabinet-flicker 11s steps(1, end) infinite;
     }
 
     @keyframes cabinet-flicker {
@@ -130,60 +142,60 @@
 
     .glass-panel {
       position: relative;
-      border: 1px solid rgba(255, 190, 40, 0.16);
+      overflow: hidden;
+      border: 1px solid rgba(255, 112, 25, 0.18);
       border-radius: 12px;
       background:
         linear-gradient(
           180deg,
-          rgba(255, 190, 45, 0.025),
-          rgba(0, 0, 0, 0.24)
+          rgba(255, 112, 25, 0.03),
+          rgba(0, 0, 0, 0.28)
         ),
-        #050400;
+        #060201;
       box-shadow:
-        inset 0 0 38px rgba(255, 177, 0, 0.035),
-        inset 0 0 3px rgba(255, 226, 155, 0.12);
-      overflow: hidden;
+        inset 0 0 38px rgba(255, 76, 8, 0.045),
+        inset 0 0 3px rgba(255, 180, 100, 0.12);
     }
 
     .glass-panel::before {
       content: "";
       position: absolute;
       inset: 0;
+      z-index: 3;
       pointer-events: none;
       background:
         linear-gradient(
-          110deg,
+          112deg,
           transparent 0%,
-          rgba(255, 230, 170, 0.025) 42%,
-          transparent 49%
+          rgba(255, 190, 130, 0.022) 43%,
+          transparent 50%
         );
-      z-index: 3;
     }
 
     .glass-panel::after {
       content: "";
       position: absolute;
       inset: 0;
+      z-index: 2;
       pointer-events: none;
       background-image:
         linear-gradient(
-          rgba(255, 190, 35, 0.055) 1px,
+          rgba(255, 92, 14, 0.055) 1px,
           transparent 1px
         ),
         linear-gradient(
           90deg,
-          rgba(255, 190, 35, 0.035) 1px,
+          rgba(255, 92, 14, 0.04) 1px,
           transparent 1px
         );
       background-size: 7px 7px;
-      opacity: 0.32;
+      opacity: 0.3;
     }
 
     #display {
-      display: grid;
-      grid-template-columns: 1fr minmax(220px, 0.34fr);
-      gap: clamp(16px, 3vw, 34px);
-      padding: clamp(16px, 3vw, 34px);
+      display: flex;
+      flex-direction: column;
+      padding: clamp(18px, 4vw, 34px);
     }
 
     #main,
@@ -194,15 +206,6 @@
     }
 
     #main {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    #wind-panel {
-      border-left: 1px solid rgba(255, 190, 40, 0.2);
-      padding-left: clamp(14px, 2vw, 28px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -214,76 +217,49 @@
     #wind-label,
     #graph-label {
       color: var(--amber-dim);
-      font-family: "VT323", monospace;
-      font-size: clamp(18px, 2vw, 26px);
-      letter-spacing: 0.25em;
+      font-size: clamp(17px, 3vw, 25px);
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      opacity: 0.86;
-      text-shadow:
-        0 0 5px rgba(255, 174, 0, 0.25);
+      opacity: 0.88;
+      text-shadow: 0 0 5px rgba(255, 80, 10, 0.28);
     }
 
-    #label,
-    #wind-label {
-      margin-bottom: 1.2vw;
+    #label {
+      margin-bottom: clamp(6px, 1vh, 12px);
     }
 
     #time {
       color: var(--amber-white);
       font-family: "IBM Plex Mono", monospace;
       font-weight: 500;
-      font-size: clamp(74px, 13vw, 180px);
-      letter-spacing: -0.04em;
-      line-height: 0.95;
+      font-size: clamp(68px, 17vw, 128px);
+      letter-spacing: -0.055em;
+      line-height: 0.94;
+      white-space: nowrap;
       text-shadow:
-        0 0 1px rgba(255, 248, 212, 1),
-        0 0 4px rgba(255, 222, 130, 1),
-        0 0 9px rgba(255, 190, 35, 0.95),
-        0 0 19px rgba(255, 170, 0, 0.68),
-        0 0 38px rgba(255, 145, 0, 0.38);
-      filter: contrast(1.12) saturate(1.05);
+        0 0 1px rgba(255, 235, 210, 1),
+        0 0 4px rgba(255, 180, 110, 0.98),
+        0 0 9px rgba(255, 115, 30, 0.94),
+        0 0 20px rgba(255, 70, 8, 0.65),
+        0 0 38px rgba(200, 35, 0, 0.32);
       animation: phosphor-breathe 4.8s ease-in-out infinite;
     }
 
     @keyframes phosphor-breathe {
       0%,
       100% {
-        filter: brightness(1) contrast(1.12);
+        filter: brightness(1) contrast(1.1);
       }
 
       50% {
-        filter: brightness(1.055) contrast(1.15);
+        filter: brightness(1.04) contrast(1.13);
       }
     }
 
     #seconds {
-      font-size: 0.32em;
-      margin-left: 0.2em;
-      opacity: 0.76;
-    }
-
-    #weather,
-    #wind-speed {
-      color: var(--amber-core);
-      font-family: "IBM Plex Mono", monospace;
-      font-size: clamp(20px, 3vw, 42px);
-      opacity: 0.92;
-      text-shadow:
-        0 0 3px rgba(255, 225, 145, 0.45),
-        0 0 9px rgba(255, 174, 0, 0.32);
-    }
-
-    #weather {
-      margin-top: clamp(16px, 2.5vw, 30px);
-    }
-
-    #date {
-      margin-top: 10px;
-      color: var(--amber-dim);
-      font-family: "VT323", monospace;
-      font-size: clamp(20px, 2.2vw, 30px);
-      letter-spacing: 0.08em;
-      opacity: 0.82;
+      margin-left: 0.17em;
+      font-size: 0.3em;
+      opacity: 0.74;
     }
 
     .colon {
@@ -296,29 +272,64 @@
       }
     }
 
+    #weather {
+      margin-top: clamp(14px, 2vh, 24px);
+      color: var(--amber-core);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(21px, 4.2vw, 34px);
+      opacity: 0.94;
+      text-shadow:
+        0 0 3px rgba(255, 175, 95, 0.42),
+        0 0 10px rgba(255, 72, 8, 0.3);
+    }
+
+    #date {
+      margin-top: 8px;
+      color: var(--amber-dim);
+      font-size: clamp(19px, 3.6vw, 28px);
+      letter-spacing: 0.08em;
+      opacity: 0.84;
+    }
+
+    #wind-panel {
+      width: 100%;
+      margin-top: clamp(18px, 2.5vh, 30px);
+      padding-top: clamp(15px, 2vh, 24px);
+      border-top: 1px solid rgba(255, 94, 14, 0.2);
+      display: grid;
+      grid-template-columns: auto minmax(100px, 145px) 1fr;
+      align-items: center;
+      gap: clamp(14px, 4vw, 28px);
+    }
+
+    #wind-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.2em;
+    }
+
     #compass {
-      width: min(18vw, 180px);
+      width: min(28vw, 140px);
       aspect-ratio: 1;
-      margin-bottom: clamp(14px, 2vw, 24px);
       position: relative;
-      border: 1px solid rgba(255, 190, 45, 0.58);
+      border: 1px solid rgba(255, 116, 28, 0.57);
       border-radius: 50%;
       box-shadow:
-        0 0 12px rgba(255, 174, 0, 0.24),
-        inset 0 0 28px rgba(255, 174, 0, 0.055);
+        0 0 13px rgba(255, 67, 6, 0.24),
+        inset 0 0 26px rgba(255, 74, 8, 0.06);
     }
 
     #compass::before,
     #compass::after {
       content: "";
       position: absolute;
-      background: rgba(255, 183, 20, 0.13);
+      background: rgba(255, 98, 18, 0.13);
     }
 
     #compass::before {
-      left: 50%;
       top: 15%;
       bottom: 15%;
+      left: 50%;
       width: 1px;
     }
 
@@ -331,34 +342,33 @@
 
     .dir {
       position: absolute;
-      color: var(--amber-dim);
-      font-family: "VT323", monospace;
-      font-size: clamp(18px, 2vw, 26px);
-      text-shadow: 0 0 5px rgba(255, 174, 0, 0.3);
       z-index: 2;
+      color: var(--amber-dim);
+      font-size: clamp(17px, 3vw, 24px);
+      text-shadow: 0 0 5px rgba(255, 70, 8, 0.3);
     }
 
     .n {
-      top: 6%;
+      top: 5%;
       left: 50%;
       transform: translateX(-50%);
     }
 
     .e {
-      right: 8%;
       top: 50%;
+      right: 7%;
       transform: translateY(-50%);
     }
 
     .s {
-      bottom: 6%;
+      bottom: 5%;
       left: 50%;
       transform: translateX(-50%);
     }
 
     .w {
-      left: 8%;
       top: 50%;
+      left: 7%;
       transform: translateY(-50%);
     }
 
@@ -372,89 +382,109 @@
     #needle::before {
       content: "";
       position: absolute;
-      left: 50%;
       top: 8%;
+      left: 50%;
       width: 3px;
       height: 45%;
       transform: translateX(-50%);
       border-radius: 999px;
-      background: var(--amber-white);
+      background: var(--amber-hot);
       box-shadow:
-        0 0 3px rgba(255, 245, 205, 1),
-        0 0 9px rgba(255, 190, 40, 0.95),
-        0 0 18px rgba(255, 160, 0, 0.58);
+        0 0 3px rgba(255, 205, 155, 1),
+        0 0 9px rgba(255, 105, 24, 0.94),
+        0 0 18px rgba(255, 58, 3, 0.54);
     }
 
     #needle::after {
       content: "";
       position: absolute;
-      left: 50%;
       top: 50%;
+      left: 50%;
       width: 8px;
       height: 8px;
       transform: translate(-50%, -50%);
       border-radius: 50%;
-      background: var(--amber-white);
+      background: var(--amber-hot);
       box-shadow:
-        0 0 6px rgba(255, 225, 145, 1),
-        0 0 14px rgba(255, 174, 0, 0.8);
+        0 0 6px rgba(255, 190, 125, 1),
+        0 0 14px rgba(255, 76, 8, 0.76);
+    }
+
+    #wind-data {
+      min-width: 0;
+      text-align: left;
+    }
+
+    #wind-speed {
+      color: var(--amber-core);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(25px, 5vw, 38px);
+      white-space: nowrap;
+      text-shadow:
+        0 0 4px rgba(255, 160, 85, 0.42),
+        0 0 10px rgba(255, 64, 6, 0.26);
     }
 
     #wind-dir {
-      margin-top: 8px;
+      margin-top: 4px;
       color: var(--amber-dim);
-      font-family: "VT323", monospace;
-      font-size: clamp(20px, 2.2vw, 30px);
+      font-size: clamp(22px, 4vw, 31px);
+      letter-spacing: 0.1em;
     }
 
     #graph-panel {
-      margin-top: clamp(16px, 2vw, 28px);
-      padding: clamp(14px, 2vw, 24px);
+      min-height: 0;
+      padding: clamp(14px, 3vw, 24px);
+    }
+
+    #graph-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     #graph-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
+      gap: 12px;
+      margin-bottom: 8px;
     }
 
     #graph-readout {
       color: var(--amber-core);
       font-family: "IBM Plex Mono", monospace;
-      font-size: clamp(16px, 2vw, 27px);
-      opacity: 0.92;
+      font-size: clamp(15px, 3vw, 23px);
       white-space: nowrap;
+      opacity: 0.94;
       text-shadow:
-        0 0 4px rgba(255, 218, 120, 0.42),
-        0 0 10px rgba(255, 174, 0, 0.25);
+        0 0 4px rgba(255, 160, 85, 0.4),
+        0 0 10px rgba(255, 64, 6, 0.25);
     }
 
     #graph-stage {
-      position: relative;
-      z-index: 1;
       width: 100%;
-      height: clamp(170px, 21vh, 240px);
+      min-height: 0;
+      flex: 1;
+      position: relative;
     }
 
     #trend-graph {
       display: block;
       width: 100%;
       height: 100%;
+      min-height: 280px;
       overflow: visible;
     }
 
     .graph-grid {
-      stroke: rgba(255, 190, 40, 0.15);
+      stroke: rgba(255, 95, 17, 0.16);
       stroke-width: 1;
       vector-effect: non-scaling-stroke;
     }
 
     .graph-grid.minor {
-      stroke: rgba(255, 190, 40, 0.07);
+      stroke: rgba(255, 95, 17, 0.075);
     }
 
     .graph-fill {
@@ -463,7 +493,7 @@
 
     .graph-afterglow {
       fill: none;
-      stroke: rgba(255, 176, 0, 0.3);
+      stroke: rgba(255, 67, 6, 0.28);
       stroke-width: 9;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -494,7 +524,7 @@
     }
 
     .graph-cursor-line {
-      stroke: rgba(255, 225, 150, 0.48);
+      stroke: rgba(255, 170, 100, 0.5);
       stroke-width: 1;
       stroke-dasharray: 3 4;
       vector-effect: non-scaling-stroke;
@@ -502,7 +532,7 @@
     }
 
     .graph-cursor-halo {
-      fill: rgba(255, 177, 0, 0.25);
+      fill: rgba(255, 64, 6, 0.28);
       filter: url("#wide-glow");
     }
 
@@ -523,8 +553,15 @@
     .graph-axis-label {
       fill: var(--amber-dim);
       font-family: "VT323", monospace;
-      font-size: 17px;
+      font-size: 18px;
       letter-spacing: 0.04em;
+    }
+
+    .graph-y-label {
+      fill: var(--amber-dim);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 15px;
+      opacity: 0.92;
     }
 
     #graph-live-value {
@@ -535,35 +572,14 @@
       filter: url("#small-glow");
     }
 
-    @media (max-width: 760px) {
-      html,
+    @media (max-height: 740px) {
       body {
         overflow: auto;
       }
 
-      #display {
-        grid-template-columns: 1fr;
-      }
-
-      #wind-panel {
-        border-top: 1px solid rgba(255, 190, 40, 0.2);
-        border-left: 0;
-        padding-top: 24px;
-        padding-left: 0;
-      }
-
-      #compass {
-        width: min(48vw, 220px);
-      }
-
-      #graph-header {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      #graph-stage {
-        height: 190px;
+      #app {
+        height: auto;
+        min-height: 96dvh;
       }
     }
   </style>
@@ -594,8 +610,10 @@
           <div id="needle"></div>
         </div>
 
-        <div id="wind-speed">-- mph</div>
-        <div id="wind-dir">---</div>
+        <div id="wind-data">
+          <div id="wind-speed">-- mph</div>
+          <div id="wind-dir">---</div>
+        </div>
       </div>
     </div>
 
@@ -609,7 +627,7 @@
         <div id="graph-stage">
           <svg
             id="trend-graph"
-            viewBox="0 0 720 210"
+            viewBox="0 0 720 340"
             preserveAspectRatio="xMidYMid meet"
           >
             <defs>
@@ -622,17 +640,17 @@
               >
                 <stop
                   offset="0%"
-                  stop-color="#ffc43d"
-                  stop-opacity="0.18"
+                  stop-color="#ff8b28"
+                  stop-opacity="0.17"
                 />
                 <stop
                   offset="55%"
-                  stop-color="#ffb000"
-                  stop-opacity="0.07"
+                  stop-color="#ff6614"
+                  stop-opacity="0.065"
                 />
                 <stop
                   offset="100%"
-                  stop-color="#ff9d00"
+                  stop-color="#d93b04"
                   stop-opacity="0"
                 />
               </linearGradient>
@@ -644,10 +662,7 @@
                 width="160%"
                 height="300%"
               >
-                <feGaussianBlur
-                  stdDeviation="2.4"
-                  result="blur"
-                />
+                <feGaussianBlur stdDeviation="2.4" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -671,10 +686,7 @@
                 width="260%"
                 height="300%"
               >
-                <feGaussianBlur
-                  stdDeviation="1.8"
-                  result="blur"
-                />
+                <feGaussianBlur stdDeviation="1.8" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -688,10 +700,7 @@
                 width="600%"
                 height="600%"
               >
-                <feGaussianBlur
-                  stdDeviation="3"
-                  result="blur"
-                />
+                <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -699,118 +708,54 @@
               </filter>
             </defs>
 
-            <g id="grid-lines">
-              <line
-                class="graph-grid minor"
-                x1="20"
-                y1="32"
-                x2="700"
-                y2="32"
-              />
-              <line
-                class="graph-grid"
-                x1="20"
-                y1="70"
-                x2="700"
-                y2="70"
-              />
-              <line
-                class="graph-grid minor"
-                x1="20"
-                y1="108"
-                x2="700"
-                y2="108"
-              />
-              <line
-                class="graph-grid"
-                x1="20"
-                y1="146"
-                x2="700"
-                y2="146"
-              />
+            <g id="graph-grid"></g>
+            <g id="graph-y-labels"></g>
 
-              <line
-                class="graph-grid minor"
-                x1="190"
-                y1="20"
-                x2="190"
-                y2="164"
-              />
-              <line
-                class="graph-grid minor"
-                x1="360"
-                y1="20"
-                x2="360"
-                y2="164"
-              />
-              <line
-                class="graph-grid minor"
-                x1="530"
-                y1="20"
-                x2="530"
-                y2="164"
-              />
-            </g>
-
-            <path
-              id="graph-fill"
-              class="graph-fill"
-              d=""
-            />
-
-            <path
-              id="graph-afterglow"
-              class="graph-afterglow"
-              d=""
-            />
-
-            <path
-              id="graph-line"
-              class="graph-line"
-              d=""
-            />
+            <path id="graph-fill" class="graph-fill" d=""></path>
+            <path id="graph-afterglow" class="graph-afterglow" d=""></path>
+            <path id="graph-line" class="graph-line" d=""></path>
 
             <line
               id="graph-cursor-line"
               class="graph-cursor-line"
-              x1="20"
+              x1="70"
               y1="20"
-              x2="20"
-              y2="164"
+              x2="70"
+              y2="286"
               visibility="hidden"
-            />
+            ></line>
 
             <circle
               id="graph-cursor-halo"
               class="graph-cursor-halo"
-              cx="20"
-              cy="90"
+              cx="70"
+              cy="140"
               r="11"
               visibility="hidden"
-            />
+            ></circle>
 
             <circle
               id="graph-cursor-dot"
               class="graph-cursor-dot"
-              cx="20"
-              cy="90"
+              cx="70"
+              cy="140"
               r="4.5"
               visibility="hidden"
-            />
+            ></circle>
 
             <circle
               id="graph-scan-dot"
               class="graph-scan-dot"
-              cx="20"
-              cy="90"
+              cx="70"
+              cy="140"
               r="2.8"
               visibility="hidden"
-            />
+            ></circle>
 
             <text
               id="graph-live-value"
-              x="30"
-              y="82"
+              x="82"
+              y="128"
               visibility="hidden"
             >
               --°
@@ -819,32 +764,32 @@
             <text
               id="graph-time-start"
               class="graph-axis-label"
-              x="20"
-              y="194"
+              x="70"
+              y="326"
               text-anchor="start"
             ></text>
 
             <text
               id="graph-time-quarter"
               class="graph-axis-label"
-              x="190"
-              y="194"
+              x="227.5"
+              y="326"
               text-anchor="middle"
             ></text>
 
             <text
               id="graph-time-middle"
               class="graph-axis-label"
-              x="360"
-              y="194"
+              x="385"
+              y="326"
               text-anchor="middle"
             ></text>
 
             <text
               id="graph-time-three-quarter"
               class="graph-axis-label"
-              x="530"
-              y="194"
+              x="542.5"
+              y="326"
               text-anchor="middle"
             ></text>
 
@@ -852,7 +797,7 @@
               id="graph-time-end"
               class="graph-axis-label"
               x="700"
-              y="194"
+              y="326"
               text-anchor="end"
             ></text>
           </svg>
@@ -861,490 +806,812 @@
     </div>
   </div>
 
-<script>
-const WEATHER_URL =
-  'https://api.open-meteo.com/v1/forecast' +
-  '?latitude=34.007' +
-  '&longitude=-109.1567' +
-  '&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m' +
-  '&hourly=temperature_2m' +
-  '&temperature_unit=fahrenheit' +
-  '&wind_speed_unit=mph' +
-  '&forecast_days=2' +
-  '&timezone=auto';
+  <script>
+    const WEATHER_URL =
+      'https://api.open-meteo.com/v1/forecast' +
+      '?latitude=34.007' +
+      '&longitude=-109.1567' +
+      '&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m' +
+      '&hourly=temperature_2m' +
+      '&temperature_unit=fahrenheit' +
+      '&wind_speed_unit=mph' +
+      '&forecast_days=2' +
+      '&timezone=auto';
 
-const WEATHER_CODES = {
-  0: 'Clear',
-  1: 'Mostly clear',
-  2: 'Partly cloudy',
-  3: 'Overcast',
-  45: 'Fog',
-  48: 'Rime fog',
-  51: 'Light drizzle',
-  53: 'Drizzle',
-  55: 'Heavy drizzle',
-  61: 'Light rain',
-  63: 'Rain',
-  65: 'Heavy rain',
-  71: 'Light snow',
-  73: 'Snow',
-  75: 'Heavy snow',
-  80: 'Rain showers',
-  81: 'Rain showers',
-  82: 'Heavy showers',
-  95: 'Thunderstorm',
-  96: 'Thunderstorm',
-  99: 'Thunderstorm'
-};
+    const WEATHER_CODES = {
+      0: 'Clear',
+      1: 'Mostly clear',
+      2: 'Partly cloudy',
+      3: 'Overcast',
+      45: 'Fog',
+      48: 'Rime fog',
+      51: 'Light drizzle',
+      53: 'Drizzle',
+      55: 'Heavy drizzle',
+      61: 'Light rain',
+      63: 'Rain',
+      65: 'Heavy rain',
+      71: 'Light snow',
+      73: 'Snow',
+      75: 'Heavy snow',
+      80: 'Rain showers',
+      81: 'Rain showers',
+      82: 'Heavy showers',
+      95: 'Thunderstorm',
+      96: 'Thunderstorm',
+      99: 'Thunderstorm'
+    };
 
-const graphState = {
-  timestamps: [],
-  temperatures: [],
-  points: [],
-  lowerBound: 0,
-  upperBound: 1,
-  startTimestamp: 0,
-  endTimestamp: 0,
-  ready: false
-};
+    const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
-const GRAPH = {
-  left: 20,
-  right: 700,
-  top: 20,
-  bottom: 164
-};
+    const GRAPH = {
+      left: 70,
+      right: 700,
+      top: 20,
+      bottom: 286
+    };
 
-function updateTime() {
-  const now = new Date();
+    const graphState = {
+      timestamps: [],
+      temperatures: [],
+      points: [],
+      lowerBound: 0,
+      upperBound: 1,
+      startTimestamp: 0,
+      endTimestamp: 0,
+      ready: false
+    };
 
-  const parts = new Intl.DateTimeFormat([], {
-    hour: 'numeric',
-    minute: '2-digit',
-    second: '2-digit'
-  }).formatToParts(now);
+    function updateTime() {
+      const now = new Date();
 
-  const hour =
-    parts.find(part => part.type === 'hour')?.value || '--';
+      const parts = new Intl.DateTimeFormat([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit'
+      }).formatToParts(now);
 
-  const minute =
-    parts.find(part => part.type === 'minute')?.value || '--';
+      const hour =
+        parts.find(part => part.type === 'hour')?.value || '--';
 
-  const second =
-    parts.find(part => part.type === 'second')?.value || '--';
+      const minute =
+        parts.find(part => part.type === 'minute')?.value || '--';
 
-  document.getElementById('time').innerHTML =
-    `${hour}` +
-    `<span class="colon">:</span>` +
-    `${minute}` +
-    `<span id="seconds">${second}</span>`;
+      const second =
+        parts.find(part => part.type === 'second')?.value || '--';
 
-  document.getElementById('date').textContent =
-    now.toLocaleDateString([], {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric'
-    });
-}
+      document.getElementById('time').innerHTML =
+        `${hour}` +
+        `<span class="colon">:</span>` +
+        `${minute}` +
+        `<span id="seconds">${second}</span>`;
 
-function compassLabel(degrees) {
-  const directions = [
-    'N',
-    'NE',
-    'E',
-    'SE',
-    'S',
-    'SW',
-    'W',
-    'NW'
-  ];
+      document.getElementById('date').textContent =
+        now.toLocaleDateString([], {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric'
+        });
+    }
 
-  return directions[
-    Math.round(degrees / 45) % directions.length
-  ];
-}
+    function compassLabel(degrees) {
+      const directions = [
+        'N',
+        'NE',
+        'E',
+        'SE',
+        'S',
+        'SW',
+        'W',
+        'NW'
+      ];
 
-function formatGraphTime(timestamp) {
-  return new Date(timestamp).toLocaleTimeString([], {
-    hour: 'numeric'
-  });
-}
+      return directions[
+        Math.round(degrees / 45) % directions.length
+      ];
+    }
 
-function temperatureToY(temperature) {
-  const graphHeight = GRAPH.bottom - GRAPH.top;
-  const span = graphState.upperBound - graphState.lowerBound;
+    function formatGraphTime(timestamp) {
+      return new Date(timestamp).toLocaleTimeString([], {
+        hour: 'numeric'
+      });
+    }
 
-  const normalized =
-    (temperature - graphState.lowerBound) / span;
+    function niceTemperatureStep(span) {
+      if (span <= 8) {
+        return 2;
+      }
 
-  return GRAPH.bottom - normalized * graphHeight;
-}
+      if (span <= 16) {
+        return 5;
+      }
 
-function timestampToX(timestamp) {
-  const graphWidth = GRAPH.right - GRAPH.left;
-  const duration =
-    graphState.endTimestamp - graphState.startTimestamp;
+      if (span <= 35) {
+        return 10;
+      }
 
-  const progress =
-    (timestamp - graphState.startTimestamp) / duration;
+      return 20;
+    }
 
-  return GRAPH.left + progress * graphWidth;
-}
+    function temperatureToY(temperature) {
+      const graphHeight = GRAPH.bottom - GRAPH.top;
 
-function buildSmoothPath(points) {
-  if (points.length < 2) {
-    return '';
-  }
+      const span =
+        graphState.upperBound -
+        graphState.lowerBound;
 
-  let path =
-    `M ${points[0][0].toFixed(2)} ` +
-    `${points[0][1].toFixed(2)}`;
+      const normalized =
+        (temperature - graphState.lowerBound) /
+        span;
 
-  for (let index = 0; index < points.length - 1; index++) {
-    const current = points[index];
-    const next = points[index + 1];
+      return GRAPH.bottom - normalized * graphHeight;
+    }
 
-    const controlX =
-      current[0] + (next[0] - current[0]) / 2;
+    function timestampToX(timestamp) {
+      const graphWidth = GRAPH.right - GRAPH.left;
 
-    path +=
-      ` C ${controlX.toFixed(2)} ${current[1].toFixed(2)},` +
-      ` ${controlX.toFixed(2)} ${next[1].toFixed(2)},` +
-      ` ${next[0].toFixed(2)} ${next[1].toFixed(2)}`;
-  }
+      const duration =
+        graphState.endTimestamp -
+        graphState.startTimestamp;
 
-  return path;
-}
+      const progress =
+        (timestamp - graphState.startTimestamp) /
+        duration;
 
-function renderTemperatureGraph(timestamps, temperatures) {
-  if (
-    !Array.isArray(timestamps) ||
-    !Array.isArray(temperatures) ||
-    timestamps.length < 2 ||
-    temperatures.length < 2
-  ) {
-    document.getElementById('graph-readout').textContent =
-      'forecast unavailable';
+      return GRAPH.left + progress * graphWidth;
+    }
 
-    return;
-  }
+    function createSvgElement(tagName, attributes = {}) {
+      const element =
+        document.createElementNS(
+          SVG_NAMESPACE,
+          tagName
+        );
 
-  const minimum = Math.min(...temperatures);
-  const maximum = Math.max(...temperatures);
-  const temperatureSpan = Math.max(1, maximum - minimum);
-  const padding = Math.max(3, temperatureSpan * 0.18);
+      for (const [name, value] of Object.entries(attributes)) {
+        element.setAttribute(name, value);
+      }
 
-  graphState.timestamps = timestamps;
-  graphState.temperatures = temperatures;
-  graphState.lowerBound = minimum - padding;
-  graphState.upperBound = maximum + padding;
-  graphState.startTimestamp = timestamps[0];
-  graphState.endTimestamp = timestamps[timestamps.length - 1];
+      return element;
+    }
 
-  graphState.points = temperatures.map(
-    (temperature, index) => [
-      timestampToX(timestamps[index]),
-      temperatureToY(temperature)
-    ]
-  );
+    function renderGraphGrid() {
+      const gridGroup =
+        document.getElementById('graph-grid');
 
-  const linePath = buildSmoothPath(graphState.points);
-  const lastPoint =
-    graphState.points[graphState.points.length - 1];
+      const labelGroup =
+        document.getElementById('graph-y-labels');
 
-  const fillPath =
-    linePath +
-    ` L ${lastPoint[0].toFixed(2)} ${GRAPH.bottom}` +
-    ` L ${GRAPH.left} ${GRAPH.bottom} Z`;
+      gridGroup.replaceChildren();
+      labelGroup.replaceChildren();
 
-  document
-    .getElementById('graph-line')
-    .setAttribute('d', linePath);
+      const temperatureSpan =
+        graphState.upperBound -
+        graphState.lowerBound;
 
-  document
-    .getElementById('graph-afterglow')
-    .setAttribute('d', linePath);
+      const step =
+        niceTemperatureStep(temperatureSpan);
 
-  document
-    .getElementById('graph-fill')
-    .setAttribute('d', fillPath);
+      const firstLabel =
+        Math.ceil(graphState.lowerBound / step) *
+        step;
 
-  document.getElementById('graph-readout').textContent =
-    `${Math.round(minimum)}° — ${Math.round(maximum)}°F`;
+      const lastLabel =
+        Math.floor(graphState.upperBound / step) *
+        step;
 
-  const finalIndex = timestamps.length - 1;
-  const quarterIndex = Math.round(finalIndex * 0.25);
-  const middleIndex = Math.round(finalIndex * 0.5);
-  const threeQuarterIndex = Math.round(finalIndex * 0.75);
+      for (
+        let temperature = firstLabel;
+        temperature <= lastLabel;
+        temperature += step
+      ) {
+        const y = temperatureToY(temperature);
 
-  document.getElementById('graph-time-start').textContent =
-    formatGraphTime(timestamps[0]);
+        const line = createSvgElement('line', {
+          class: 'graph-grid',
+          x1: GRAPH.left,
+          y1: y.toFixed(2),
+          x2: GRAPH.right,
+          y2: y.toFixed(2)
+        });
 
-  document.getElementById('graph-time-quarter').textContent =
-    formatGraphTime(timestamps[quarterIndex]);
+        const label = createSvgElement('text', {
+          class: 'graph-y-label',
+          x: GRAPH.left - 12,
+          y: (y + 5).toFixed(2),
+          'text-anchor': 'end'
+        });
 
-  document.getElementById('graph-time-middle').textContent =
-    formatGraphTime(timestamps[middleIndex]);
+        label.textContent = `${Math.round(temperature)}°F`;
 
-  document.getElementById(
-    'graph-time-three-quarter'
-  ).textContent =
-    formatGraphTime(timestamps[threeQuarterIndex]);
+        gridGroup.appendChild(line);
+        labelGroup.appendChild(label);
+      }
 
-  document.getElementById('graph-time-end').textContent =
-    formatGraphTime(timestamps[finalIndex]);
+      for (const fraction of [0.25, 0.5, 0.75]) {
+        const x =
+          GRAPH.left +
+          (GRAPH.right - GRAPH.left) *
+          fraction;
 
-  graphState.ready = true;
+        const line = createSvgElement('line', {
+          class: 'graph-grid minor',
+          x1: x.toFixed(2),
+          y1: GRAPH.top,
+          x2: x.toFixed(2),
+          y2: GRAPH.bottom
+        });
 
-  updateLiveGraphCursor();
-}
+        gridGroup.appendChild(line);
+      }
+    }
 
-function interpolateForecastTemperature(timestamp) {
-  const times = graphState.timestamps;
-  const temperatures = graphState.temperatures;
+    function buildSmoothPath(points) {
+      if (points.length < 2) {
+        return '';
+      }
 
-  if (timestamp <= times[0]) {
-    return temperatures[0];
-  }
+      let path =
+        `M ${points[0][0].toFixed(2)} ` +
+        `${points[0][1].toFixed(2)}`;
 
-  if (timestamp >= times[times.length - 1]) {
-    return temperatures[temperatures.length - 1];
-  }
+      for (
+        let index = 0;
+        index < points.length - 1;
+        index++
+      ) {
+        const current = points[index];
+        const next = points[index + 1];
 
-  for (let index = 0; index < times.length - 1; index++) {
-    const start = times[index];
-    const end = times[index + 1];
+        const controlX =
+          current[0] +
+          (next[0] - current[0]) / 2;
 
-    if (timestamp >= start && timestamp <= end) {
-      const progress = (timestamp - start) / (end - start);
+        path +=
+          ` C ${controlX.toFixed(2)} ` +
+          `${current[1].toFixed(2)},` +
+          ` ${controlX.toFixed(2)} ` +
+          `${next[1].toFixed(2)},` +
+          ` ${next[0].toFixed(2)} ` +
+          `${next[1].toFixed(2)}`;
+      }
 
-      return (
-        temperatures[index] +
-        (temperatures[index + 1] - temperatures[index]) *
-        progress
+      return path;
+    }
+
+    function renderTemperatureGraph(
+      timestamps,
+      temperatures
+    ) {
+      if (
+        !Array.isArray(timestamps) ||
+        !Array.isArray(temperatures) ||
+        timestamps.length < 2 ||
+        temperatures.length < 2
+      ) {
+        document.getElementById(
+          'graph-readout'
+        ).textContent =
+          'forecast unavailable';
+
+        return;
+      }
+
+      const minimum =
+        Math.min(...temperatures);
+
+      const maximum =
+        Math.max(...temperatures);
+
+      const temperatureSpan =
+        Math.max(1, maximum - minimum);
+
+      const scaleStep =
+        niceTemperatureStep(temperatureSpan);
+
+      graphState.timestamps = timestamps;
+      graphState.temperatures = temperatures;
+
+      graphState.lowerBound =
+        Math.floor(
+          (minimum - scaleStep * 0.45) /
+          scaleStep
+        ) * scaleStep;
+
+      graphState.upperBound =
+        Math.ceil(
+          (maximum + scaleStep * 0.45) /
+          scaleStep
+        ) * scaleStep;
+
+      if (
+        graphState.upperBound ===
+        graphState.lowerBound
+      ) {
+        graphState.upperBound += scaleStep;
+      }
+
+      graphState.startTimestamp =
+        timestamps[0];
+
+      graphState.endTimestamp =
+        timestamps[timestamps.length - 1];
+
+      graphState.points =
+        temperatures.map(
+          (temperature, index) => [
+            timestampToX(timestamps[index]),
+            temperatureToY(temperature)
+          ]
+        );
+
+      renderGraphGrid();
+
+      const linePath =
+        buildSmoothPath(graphState.points);
+
+      const lastPoint =
+        graphState.points[
+          graphState.points.length - 1
+        ];
+
+      const fillPath =
+        linePath +
+        ` L ${lastPoint[0].toFixed(2)} ${GRAPH.bottom}` +
+        ` L ${GRAPH.left} ${GRAPH.bottom} Z`;
+
+      document
+        .getElementById('graph-line')
+        .setAttribute('d', linePath);
+
+      document
+        .getElementById('graph-afterglow')
+        .setAttribute('d', linePath);
+
+      document
+        .getElementById('graph-fill')
+        .setAttribute('d', fillPath);
+
+      document.getElementById(
+        'graph-readout'
+      ).textContent =
+        `${Math.round(minimum)}° — ` +
+        `${Math.round(maximum)}°F`;
+
+      const finalIndex =
+        timestamps.length - 1;
+
+      const quarterIndex =
+        Math.round(finalIndex * 0.25);
+
+      const middleIndex =
+        Math.round(finalIndex * 0.5);
+
+      const threeQuarterIndex =
+        Math.round(finalIndex * 0.75);
+
+      document.getElementById(
+        'graph-time-start'
+      ).textContent =
+        formatGraphTime(timestamps[0]);
+
+      document.getElementById(
+        'graph-time-quarter'
+      ).textContent =
+        formatGraphTime(
+          timestamps[quarterIndex]
+        );
+
+      document.getElementById(
+        'graph-time-middle'
+      ).textContent =
+        formatGraphTime(
+          timestamps[middleIndex]
+        );
+
+      document.getElementById(
+        'graph-time-three-quarter'
+      ).textContent =
+        formatGraphTime(
+          timestamps[threeQuarterIndex]
+        );
+
+      document.getElementById(
+        'graph-time-end'
+      ).textContent =
+        formatGraphTime(
+          timestamps[finalIndex]
+        );
+
+      graphState.ready = true;
+
+      updateLiveGraphCursor();
+    }
+
+    function interpolateForecastTemperature(timestamp) {
+      const times = graphState.timestamps;
+      const temperatures = graphState.temperatures;
+
+      if (timestamp <= times[0]) {
+        return temperatures[0];
+      }
+
+      if (timestamp >= times[times.length - 1]) {
+        return temperatures[temperatures.length - 1];
+      }
+
+      for (
+        let index = 0;
+        index < times.length - 1;
+        index++
+      ) {
+        const start = times[index];
+        const end = times[index + 1];
+
+        if (
+          timestamp >= start &&
+          timestamp <= end
+        ) {
+          const progress =
+            (timestamp - start) /
+            (end - start);
+
+          return (
+            temperatures[index] +
+            (
+              temperatures[index + 1] -
+              temperatures[index]
+            ) *
+            progress
+          );
+        }
+      }
+
+      return temperatures[0];
+    }
+
+    function updateLiveGraphCursor() {
+      if (!graphState.ready) {
+        return;
+      }
+
+      const now = Date.now();
+
+      const boundedTimestamp =
+        Math.min(
+          graphState.endTimestamp,
+          Math.max(
+            graphState.startTimestamp,
+            now
+          )
+        );
+
+      const temperature =
+        interpolateForecastTemperature(
+          boundedTimestamp
+        );
+
+      const x =
+        timestampToX(boundedTimestamp);
+
+      const y =
+        temperatureToY(temperature);
+
+      const cursorLine =
+        document.getElementById(
+          'graph-cursor-line'
+        );
+
+      const cursorHalo =
+        document.getElementById(
+          'graph-cursor-halo'
+        );
+
+      const cursorDot =
+        document.getElementById(
+          'graph-cursor-dot'
+        );
+
+      const liveValue =
+        document.getElementById(
+          'graph-live-value'
+        );
+
+      cursorLine.setAttribute(
+        'x1',
+        x.toFixed(2)
+      );
+
+      cursorLine.setAttribute(
+        'x2',
+        x.toFixed(2)
+      );
+
+      cursorLine.setAttribute(
+        'visibility',
+        'visible'
+      );
+
+      cursorHalo.setAttribute(
+        'cx',
+        x.toFixed(2)
+      );
+
+      cursorHalo.setAttribute(
+        'cy',
+        y.toFixed(2)
+      );
+
+      cursorHalo.setAttribute(
+        'visibility',
+        'visible'
+      );
+
+      cursorDot.setAttribute(
+        'cx',
+        x.toFixed(2)
+      );
+
+      cursorDot.setAttribute(
+        'cy',
+        y.toFixed(2)
+      );
+
+      cursorDot.setAttribute(
+        'visibility',
+        'visible'
+      );
+
+      const placeLabelOnLeft =
+        x > GRAPH.right - 95;
+
+      const labelX =
+        placeLabelOnLeft
+          ? x - 12
+          : x + 12;
+
+      liveValue.setAttribute(
+        'x',
+        labelX.toFixed(2)
+      );
+
+      liveValue.setAttribute(
+        'y',
+        Math.max(
+          GRAPH.top + 18,
+          y - 12
+        ).toFixed(2)
+      );
+
+      liveValue.setAttribute(
+        'text-anchor',
+        placeLabelOnLeft
+          ? 'end'
+          : 'start'
+      );
+
+      liveValue.setAttribute(
+        'visibility',
+        'visible'
+      );
+
+      liveValue.textContent =
+        `${Math.round(temperature)}°`;
+    }
+
+    function animateScanDot(timestamp) {
+      if (!graphState.ready) {
+        requestAnimationFrame(
+          animateScanDot
+        );
+
+        return;
+      }
+
+      const cycleDuration = 8500;
+
+      const cycleProgress =
+        (timestamp % cycleDuration) /
+        cycleDuration;
+
+      const graphTimestamp =
+        graphState.startTimestamp +
+        cycleProgress *
+        (
+          graphState.endTimestamp -
+          graphState.startTimestamp
+        );
+
+      const temperature =
+        interpolateForecastTemperature(
+          graphTimestamp
+        );
+
+      const x =
+        timestampToX(graphTimestamp);
+
+      const y =
+        temperatureToY(temperature);
+
+      const scanDot =
+        document.getElementById(
+          'graph-scan-dot'
+        );
+
+      scanDot.setAttribute(
+        'cx',
+        x.toFixed(2)
+      );
+
+      scanDot.setAttribute(
+        'cy',
+        y.toFixed(2)
+      );
+
+      scanDot.setAttribute(
+        'visibility',
+        'visible'
+      );
+
+      requestAnimationFrame(
+        animateScanDot
       );
     }
-  }
 
-  return temperatures[0];
-}
+    function getNext24Hours(hourly) {
+      if (
+        !hourly?.time ||
+        !hourly?.temperature_2m
+      ) {
+        return null;
+      }
 
-function updateLiveGraphCursor() {
-  if (!graphState.ready) {
-    return;
-  }
+      const timestamps =
+        hourly.time.map(
+          time => new Date(time).getTime()
+        );
 
-  const now = Date.now();
+      const now = Date.now();
 
-  const boundedTimestamp = Math.min(
-    graphState.endTimestamp,
-    Math.max(graphState.startTimestamp, now)
-  );
+      let startingIndex =
+        timestamps.findIndex(
+          timestamp => timestamp > now
+        );
 
-  const temperature =
-    interpolateForecastTemperature(boundedTimestamp);
+      if (startingIndex < 1) {
+        startingIndex = 1;
+      }
 
-  const x = timestampToX(boundedTimestamp);
-  const y = temperatureToY(temperature);
+      startingIndex -= 1;
 
-  const cursorLine =
-    document.getElementById('graph-cursor-line');
+      const endingIndex =
+        Math.min(
+          startingIndex + 25,
+          hourly.time.length
+        );
 
-  const cursorHalo =
-    document.getElementById('graph-cursor-halo');
+      return {
+        timestamps:
+          timestamps.slice(
+            startingIndex,
+            endingIndex
+          ),
 
-  const cursorDot =
-    document.getElementById('graph-cursor-dot');
+        temperatures:
+          hourly.temperature_2m.slice(
+            startingIndex,
+            endingIndex
+          )
+      };
+    }
 
-  const liveValue =
-    document.getElementById('graph-live-value');
+    async function updateWeather() {
+      try {
+        const response =
+          await fetch(WEATHER_URL);
 
-  cursorLine.setAttribute('x1', x.toFixed(2));
-  cursorLine.setAttribute('x2', x.toFixed(2));
-  cursorLine.setAttribute('visibility', 'visible');
+        if (!response.ok) {
+          throw new Error(
+            `Weather request failed: ${response.status}`
+          );
+        }
 
-  cursorHalo.setAttribute('cx', x.toFixed(2));
-  cursorHalo.setAttribute('cy', y.toFixed(2));
-  cursorHalo.setAttribute('visibility', 'visible');
+        const data =
+          await response.json();
 
-  cursorDot.setAttribute('cx', x.toFixed(2));
-  cursorDot.setAttribute('cy', y.toFixed(2));
-  cursorDot.setAttribute('visibility', 'visible');
+        if (!data.current) {
+          throw new Error(
+            'Weather response has no current conditions'
+          );
+        }
 
-  const placeLabelOnLeft = x > GRAPH.right - 100;
-  const labelX = placeLabelOnLeft ? x - 12 : x + 12;
+        const temperature =
+          Math.round(
+            data.current.temperature_2m
+          );
 
-  liveValue.setAttribute('x', labelX.toFixed(2));
-  liveValue.setAttribute(
-    'y',
-    Math.max(GRAPH.top + 18, y - 12).toFixed(2)
-  );
-  liveValue.setAttribute(
-    'text-anchor',
-    placeLabelOnLeft ? 'end' : 'start'
-  );
-  liveValue.setAttribute('visibility', 'visible');
-  liveValue.textContent = `${Math.round(temperature)}°`;
-}
+        const description =
+          WEATHER_CODES[
+            data.current.weather_code
+          ] || 'Weather';
 
-function animateScanDot(timestamp) {
-  if (!graphState.ready) {
+        const windSpeed =
+          Math.round(
+            data.current.wind_speed_10m
+          );
+
+        const windDirection =
+          Math.round(
+            data.current.wind_direction_10m
+          );
+
+        document.getElementById(
+          'weather'
+        ).textContent =
+          `${temperature}°F · ${description}`;
+
+        document.getElementById(
+          'wind-speed'
+        ).textContent =
+          `${windSpeed} mph`;
+
+        document.getElementById(
+          'wind-dir'
+        ).textContent =
+          compassLabel(windDirection);
+
+        document.getElementById(
+          'needle'
+        ).style.transform =
+          `rotate(${windDirection}deg)`;
+
+        const forecast =
+          getNext24Hours(data.hourly);
+
+        if (forecast) {
+          renderTemperatureGraph(
+            forecast.timestamps,
+            forecast.temperatures
+          );
+        } else {
+          document.getElementById(
+            'graph-readout'
+          ).textContent =
+            'forecast unavailable';
+        }
+      } catch (error) {
+        console.error(error);
+
+        document.getElementById(
+          'weather'
+        ).textContent =
+          'weather unavailable';
+
+        document.getElementById(
+          'wind-speed'
+        ).textContent =
+          '-- mph';
+
+        document.getElementById(
+          'wind-dir'
+        ).textContent =
+          '---';
+
+        document.getElementById(
+          'graph-readout'
+        ).textContent =
+          'forecast unavailable';
+      }
+    }
+
+    updateTime();
+    updateWeather();
+
+    setInterval(updateTime, 1000);
+    setInterval(updateLiveGraphCursor, 1000);
+    setInterval(updateWeather, 60000);
+
     requestAnimationFrame(animateScanDot);
-    return;
-  }
-
-  const cycleDuration = 8500;
-  const cycleProgress =
-    (timestamp % cycleDuration) / cycleDuration;
-
-  const graphTimestamp =
-    graphState.startTimestamp +
-    cycleProgress *
-    (
-      graphState.endTimestamp -
-      graphState.startTimestamp
-    );
-
-  const temperature =
-    interpolateForecastTemperature(graphTimestamp);
-
-  const x = timestampToX(graphTimestamp);
-  const y = temperatureToY(temperature);
-
-  const scanDot =
-    document.getElementById('graph-scan-dot');
-
-  scanDot.setAttribute('cx', x.toFixed(2));
-  scanDot.setAttribute('cy', y.toFixed(2));
-  scanDot.setAttribute('visibility', 'visible');
-
-  requestAnimationFrame(animateScanDot);
-}
-
-function getNext24Hours(hourly) {
-  if (!hourly?.time || !hourly?.temperature_2m) {
-    return null;
-  }
-
-  const timestamps = hourly.time.map(
-    time => new Date(time).getTime()
-  );
-
-  const now = Date.now();
-
-  let startingIndex = timestamps.findIndex(
-    timestamp => timestamp > now
-  );
-
-  if (startingIndex < 1) {
-    startingIndex = 1;
-  }
-
-  /*
-   * Include the previous hour so the live cursor can interpolate
-   * smoothly from the current time into the future.
-   */
-  startingIndex -= 1;
-
-  const endingIndex = Math.min(
-    startingIndex + 25,
-    hourly.time.length
-  );
-
-  return {
-    timestamps: timestamps.slice(
-      startingIndex,
-      endingIndex
-    ),
-    temperatures: hourly.temperature_2m.slice(
-      startingIndex,
-      endingIndex
-    )
-  };
-}
-
-async function updateWeather() {
-  try {
-    const response = await fetch(WEATHER_URL);
-
-    if (!response.ok) {
-      throw new Error(
-        `Weather request failed: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-
-    if (!data.current) {
-      throw new Error(
-        'Weather response has no current conditions'
-      );
-    }
-
-    const temperature =
-      Math.round(data.current.temperature_2m);
-
-    const description =
-      WEATHER_CODES[data.current.weather_code] ||
-      'Weather';
-
-    const windSpeed =
-      Math.round(data.current.wind_speed_10m);
-
-    const windDirection =
-      Math.round(data.current.wind_direction_10m);
-
-    document.getElementById('weather').textContent =
-      `${temperature}°F · ${description}`;
-
-    document.getElementById('wind-speed').textContent =
-      `${windSpeed} mph`;
-
-    document.getElementById('wind-dir').textContent =
-      compassLabel(windDirection);
-
-    /*
-     * Zero degrees points north because the needle begins upright.
-     */
-    document.getElementById('needle').style.transform =
-      `rotate(${windDirection}deg)`;
-
-    const forecast = getNext24Hours(data.hourly);
-
-    if (forecast) {
-      renderTemperatureGraph(
-        forecast.timestamps,
-        forecast.temperatures
-      );
-    } else {
-      document.getElementById('graph-readout').textContent =
-        'forecast unavailable';
-    }
-  } catch (error) {
-    console.error(error);
-
-    document.getElementById('weather').textContent =
-      'weather unavailable';
-
-    document.getElementById('wind-speed').textContent =
-      '-- mph';
-
-    document.getElementById('wind-dir').textContent =
-      '---';
-
-    document.getElementById('graph-readout').textContent =
-      'forecast unavailable';
-  }
-}
-
-updateTime();
-updateWeather();
-
-setInterval(updateTime, 1000);
-setInterval(updateLiveGraphCursor, 1000);
-setInterval(updateWeather, 60000);
-
-requestAnimationFrame(animateScanDot);
-</script>
+  </script>
 </body>
 </html>
